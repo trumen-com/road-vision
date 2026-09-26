@@ -1,0 +1,39 @@
+{
+ "videos": [
+  {
+   "id": "C3896",
+   "file": "C3896.mp4",
+   "duration": 340.34,
+   "fps": 9.990001184108964,
+   "width": 1280,
+   "height": 720,
+   "events": 36,
+   "classes": [
+    "accident",
+    "congestion",
+    "failure_to_yield",
+    "jaywalking",
+    "near_miss",
+    "red_light",
+    "stop_line",
+    "stopped_vehicle"
+   ]
+  },
+  {
+   "id": "C3905",
+   "file": "C3905.mp4",
+   "duration": 127.63,
+   "fps": 9.990002162541645,
+   "width": 1280,
+   "height": 720,
+   "events": 18,
+   "classes": [
+    "failure_to_yield",
+    "jaywalking",
+    "near_miss",
+    "stop_line",
+    "stopped_vehicle"
+   ]
+  }
+ ]
+}

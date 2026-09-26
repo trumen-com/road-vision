@@ -1,0 +1,6 @@
+web/
+samples/
+dev_videos/
+.cache/
+.git/
+**/__pycache__/

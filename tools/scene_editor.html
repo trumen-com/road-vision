@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TruMinds Scene Map Editor</title>
+<style>
+  :root { --bg:#0e1116; --panel:#161b22; --line:#2d333b; --text:#e6edf3; --muted:#8b949e; --accent:#4c9aff; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--text); }
+  header { padding:10px 16px; border-bottom:1px solid var(--line); display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  header h1 { font-size:16px; margin:0 10px 0 0; }
+  main { display:grid; grid-template-columns: 1fr 360px; gap:12px; padding:12px; }
+  @media (max-width: 1000px) { main { grid-template-columns: 1fr; } }
+  canvas { width:100%; background:#000; border-radius:6px; cursor:crosshair; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:10px; }
+  button, select, input, textarea { background:#21262d; color:var(--text); border:1px solid var(--line); border-radius:6px; padding:6px 10px; font:inherit; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:6px 0; }
+  .muted { color:var(--muted); font-size:12px; }
+  ul { list-style:none; padding:0; margin:0; max-height:360px; overflow:auto; }
+  li { display:flex; justify-content:space-between; gap:6px; padding:4px 0; border-bottom:1px solid var(--line); }
+  textarea { width:100%; height:70px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Scene Map Editor</h1>
+  <label>Frame or video <input type="file" id="media" accept="image/*,video/mp4"></label>
+  <input type="number" id="seek" value="5" step="1" style="width:70px" title="seconds into the video"> s
+  <label>Import scene.json <input type="file" id="importFile" accept="application/json"></label>
+  <button class="primary" id="exportBtn">Export scene.json</button>
+</header>
+<main>
+  <section>
+    <canvas id="cv"></canvas>
+    <p class="muted" id="hint">Load a frame, pick a tool, click points. <b>Enter</b> or double-click finishes a shape, <b>Backspace</b> removes the last point, <b>Esc</b> cancels.</p>
+  </section>
+  <aside class="panel">
+    <div class="row">
+      <select id="tool" style="flex:1">
+        <option value="carriageway">carriageway (polygon)</option>
+        <option value="crosswalks">crosswalk (polygon)</option>
+        <option value="lanes">lane (polygon, then 2-point direction)</option>
+        <option value="stop_lines">stop line (2 points, then 2-point direction)</option>
+        <option value="signals">signal head ROI (2 corners)</option>
+        <option value="intersection">intersection box (polygon)</option>
+        <option value="solid_lines">solid line (polyline)</option>
+        <option value="gates">entry/exit gate (polygon)</option>
+        <option value="u_turn_allowed_zones">U-turn allowed zone (polygon)</option>
+        <option value="exclude">exclude, e.g. parking (polygon)</option>
+      </select>
+    </div>
+    <div class="row">id / group <input id="ident" placeholder="e.g. north_in" style="flex:1"></div>
+    <div class="row">signal for stop line <input id="sigref" placeholder="e.g. sig_n" style="flex:1"></div>
+    <p class="muted" id="toolHelp"></p>
+    <b>Allowed movements</b>
+    <p class="muted">Gate pairs, one per line: <code>S_in N_out</code>. Movements not listed are illegal turns.</p>
+    <textarea id="moves"></textarea>
+    <b>Elements</b>
+    <ul id="list"></ul>
+  </aside>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const cv = $("cv"), ctx = cv.getContext("2d");
+let img = null, W = 1920, H = 1080;
+const scene = { reference_size: [1920, 1080], carriageway: [], exclude: [], crosswalks: [], lanes: [], intersection: [],
+  stop_lines: [], signals: [], solid_lines: [], gates: [], allowed_movements: [], u_turn_allowed_zones: [] };
+let pts = [], phase = "shape", pending = null;
+const HELP = {
+  lanes: "Draw the lane polygon, press Enter, then click tail and head of the legal travel direction. Put lanes of one direction in the same group (id field).",
+  stop_lines: "Click both ends of the stop line, then tail and head of the travel direction. Fill 'signal for stop line' with the signal id controlling it.",
+  signals: "Click two opposite corners of a traffic-light head that faces the camera. The id field names it (e.g. sig_n).",
+  gates: "Polygon where trajectories enter or leave the scene; the id is used in allowed movements.",
+};
+const COL = { carriageway:"#888", crosswalks:"#fff", lanes:"#ffb000", stop_lines:"#ff3b3b", signals:"#ff00ff", intersection:"#1e90ff",
+  solid_lines:"#00e5e5", gates:"#22c55e", u_turn_allowed_zones:"#a3e635", exclude:"#f97316" };
+
+function fit() { cv.width = W; cv.height = H; draw(); }
+function toImg(ev) { const r = cv.getBoundingClientRect(); return [Math.round((ev.clientX - r.left) / r.width * W), Math.round((ev.clientY - r.top) / r.height * H)]; }
+function poly(p, color, close = true, fill = false) {
+  if (!p.length) return; ctx.strokeStyle = color; ctx.fillStyle = color + "33"; ctx.lineWidth = Math.max(2, W / 600);
+  ctx.beginPath(); ctx.moveTo(...p[0]); p.slice(1).forEach(q => ctx.lineTo(...q)); if (close) ctx.closePath(); ctx.stroke(); if (fill) ctx.fill();
+  p.forEach(q => { ctx.beginPath(); ctx.arc(q[0], q[1], Math.max(3, W / 400), 0, 7); ctx.fillStyle = color; ctx.fill(); });
+}
+function arrow(a, d, color) {
+  const b = [a[0] + d[0] * 60, a[1] + d[1] * 60]; ctx.strokeStyle = color; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(...a); ctx.lineTo(...b); ctx.stroke();
+  const ang = Math.atan2(d[1], d[0]); ctx.beginPath(); ctx.moveTo(...b);
+  ctx.lineTo(b[0] - 14 * Math.cos(ang - 0.4), b[1] - 14 * Math.sin(ang - 0.4)); ctx.lineTo(b[0] - 14 * Math.cos(ang + 0.4), b[1] - 14 * Math.sin(ang + 0.4)); ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+}
+const centroid = (p) => [p.reduce((s, q) => s + q[0], 0) / p.length, p.reduce((s, q) => s + q[1], 0) / p.length];
+function draw() {
+  ctx.clearRect(0, 0, W, H); if (img) ctx.drawImage(img, 0, 0, W, H);
+  ["carriageway", "crosswalks", "u_turn_allowed_zones", "exclude"].forEach(k => scene[k].forEach(p => poly(p, COL[k], true, true)));
+  if (scene.intersection.length) poly(scene.intersection, COL.intersection);
+  scene.lanes.forEach(l => { poly(l.polygon, COL.lanes); arrow(centroid(l.polygon), l.direction, COL.lanes); });
+  scene.stop_lines.forEach(s => { poly(s.line, COL.stop_lines, false); arrow(centroid(s.line), s.direction, COL.stop_lines); });
+  scene.signals.forEach(s => { const [x1, y1, x2, y2] = s.roi; poly([[x1, y1], [x2, y1], [x2, y2], [x1, y2]], COL.signals); });
+  scene.solid_lines.forEach(p => poly(p, COL.solid_lines, false));
+  scene.gates.forEach(g => { poly(g.polygon, COL.gates, true, true); ctx.fillStyle = "#fff"; ctx.font = `${Math.round(W / 70)}px sans-serif`; ctx.fillText(g.id, ...centroid(g.polygon)); });
+  poly(pts, "#4c9aff", false);
+}
+function norm(a, b) { const d = [b[0] - a[0], b[1] - a[1]]; const n = Math.hypot(...d) || 1; return [d[0] / n, d[1] / n]; }
+function finish() {
+  const tool = $("tool").value, id = $("ident").value.trim();
+  if (phase === "direction") {
+    if (pts.length < 2) return;
+    const d = norm(pts[0], pts[1]);
+    if (tool === "lanes") scene.lanes.push({ id: id || `lane${scene.lanes.length}`, polygon: pending, direction: d, group: id || "default" });
+    else scene.stop_lines.push({ id: `sl${scene.stop_lines.length}`, line: pending, direction: d, signal: $("sigref").value.trim() || null });
+    phase = "shape"; pending = null; pts = []; refresh(); return;
+  }
+  if (tool === "signals") { if (pts.length < 2) return; const [a, b] = pts; scene.signals.push({ id: id || `sig${scene.signals.length}`, roi: [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[0], b[0]), Math.max(a[1], b[1])] }); pts = []; refresh(); return; }
+  if (tool === "stop_lines") { if (pts.length < 2) return; pending = pts.slice(0, 2); pts = []; phase = "direction"; $("hint").textContent = "Now click tail and head of the travel direction, then Enter."; draw(); return; }
+  if (tool === "solid_lines") { if (pts.length < 2) return; scene.solid_lines.push(pts); pts = []; refresh(); return; }
+  if (pts.length < 3) return;
+  if (tool === "lanes") { pending = pts; pts = []; phase = "direction"; $("hint").textContent = "Now click tail and head of the travel direction, then Enter."; draw(); return; }
+  if (tool === "intersection") scene.intersection = pts;
+  else if (tool === "gates") scene.gates.push({ id: id || `gate${scene.gates.length}`, polygon: pts });
+  else scene[tool].push(pts);
+  pts = []; refresh();
+}
+function refresh() {
+  const ul = $("list"); ul.innerHTML = "";
+  const add = (label, del) => { const li = document.createElement("li"); li.innerHTML = `<span>${label}</span>`; const b = document.createElement("button"); b.textContent = "✕"; b.onclick = () => { del(); refresh(); }; li.appendChild(b); ul.appendChild(li); };
+  ["carriageway", "crosswalks", "solid_lines", "u_turn_allowed_zones", "exclude"].forEach(k => scene[k].forEach((p, i) => add(`${k} #${i}`, () => scene[k].splice(i, 1))));
+  ["lanes", "stop_lines", "signals", "gates"].forEach(k => scene[k].forEach((e, i) => add(`${k}: ${e.id}${e.signal ? " → " + e.signal : ""}`, () => scene[k].splice(i, 1))));
+  if (scene.intersection.length) add("intersection", () => scene.intersection = []);
+  $("moves").value = scene.allowed_movements.map(m => m.join(" ")).join("\n");
+  $("hint").textContent = "Enter / double-click finishes a shape, Backspace removes the last point, Esc cancels.";
+  draw();
+}
+cv.onclick = (ev) => { pts.push(toImg(ev)); if (($("tool").value === "signals" || phase === "direction") && pts.length === 2) finish(); else draw(); };
+cv.ondblclick = (ev) => { ev.preventDefault(); pts.pop(); finish(); };
+document.addEventListener("keydown", (ev) => {
+  if (["INPUT", "TEXTAREA"].includes(ev.target.tagName)) return;
+  if (ev.key === "Enter") finish(); else if (ev.key === "Escape") { pts = []; phase = "shape"; pending = null; draw(); }
+  else if (ev.key === "Backspace") { pts.pop(); draw(); }
+});
+$("tool").onchange = () => { $("toolHelp").textContent = HELP[$("tool").value] || ""; pts = []; phase = "shape"; draw(); };
+$("moves").onchange = () => { scene.allowed_movements = $("moves").value.split("\n").map(l => l.trim().split(/\s+/)).filter(m => m.length === 2); };
+$("media").onchange = (ev) => {
+  const f = ev.target.files[0]; if (!f) return; const url = URL.createObjectURL(f);
+  if (f.type.startsWith("image")) { const im = new Image(); im.onload = () => { img = im; W = im.naturalWidth; H = im.naturalHeight; scene.reference_size = [W, H]; fit(); }; im.src = url; }
+  else { const v = document.createElement("video"); v.muted = true; v.src = url; v.onloadedmetadata = () => { v.currentTime = Math.min(parseFloat($("seek").value) || 0, v.duration - 0.1); };
+    v.onseeked = () => { const c = document.createElement("canvas"); c.width = v.videoWidth; c.height = v.videoHeight; c.getContext("2d").drawImage(v, 0, 0); const im = new Image(); im.onload = () => { img = im; W = c.width; H = c.height; scene.reference_size = [W, H]; fit(); }; im.src = c.toDataURL(); }; }
+};
+$("importFile").onchange = async (ev) => { const f = ev.target.files[0]; if (!f) return; Object.assign(scene, JSON.parse(await f.text())); [W, H] = scene.reference_size; fit(); refresh(); };
+$("exportBtn").onclick = () => { $("moves").onchange(); const out = { _doc: "Scene map drawn with tools/scene_editor.html", ...scene }; const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], { type: "application/json" })); a.download = "scene.json"; a.click(); };
+fit(); refresh(); $("tool").onchange();
+</script>
+</body>
+</html>

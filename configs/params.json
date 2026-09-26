@@ -1,0 +1,201 @@
+{
+  "_doc": "All tunable thresholds. Speeds are relative: object sizes per second (|v_px| / sqrt(w*h)), so they are perspective-independent without calibration.",
+  "seed": 0,
+  "detector": {
+    "weights_gpu": "weights/yolo11m.pt",
+    "weights_cpu": "weights/yolo11n.pt",
+    "imgsz_gpu": 960,
+    "imgsz_cpu": 640,
+    "conf": 0.2,
+    "iou": 0.6,
+    "batch": 8,
+    "classes": [0, 1, 2, 3, 5, 7, 9, 14, 15, 16, 17, 18, 19]
+  },
+  "budget": {
+    "_doc": "Fraction of video duration each part may use in wall-clock time (official limit: A+B <= 3.0x). Strides adapt to measured throughput.",
+    "part_a_factor": 1.0,
+    "part_b_factor": 1.1,
+    "min_stride": 2,
+    "max_stride": 6
+  },
+  "tracker": {
+    "high_thresh": 0.4,
+    "low_thresh": 0.15,
+    "new_track_thresh": 0.45,
+    "match_iou": 0.15,
+    "second_match_iou": 0.3,
+    "lost_seconds": 2.0,
+    "min_hits": 2
+  },
+  "kinematics": {
+    "smooth_seconds": 0.8,
+    "stitch_gap_seconds": 1.5,
+    "stitch_max_dist": 0.8
+  },
+  "flow": {
+    "grid": [48, 27],
+    "min_support": 15,
+    "min_coherence": 0.65,
+    "min_speed": 0.6
+  },
+  "rules": {
+    "stopped_vehicle": {
+      "enabled": true,
+      "stop_speed": 0.12,
+      "min_seconds": 10.0,
+      "spot_iou": 0.45,
+      "spot_gap": 3.0,
+      "queue_ahead_sizes": 3.5,
+      "queue_fraction": 0.5,
+      "stopline_sizes": 6.0,
+      "min_scale_px": 22
+    },
+    "congestion": {
+      "enabled": true,
+      "bin_seconds": 1.0,
+      "min_vehicles": 4,
+      "crawl_speed": 0.6,
+      "slow_fraction": 0.75,
+      "enter_seconds": 3.0,
+      "exit_seconds": 4.0,
+      "min_seconds": 15.0,
+      "min_green_seconds": 8
+    },
+    "wrong_way": {
+      "enabled": true,
+      "min_speed": 0.7,
+      "cos_thresh": -0.5,
+      "min_seconds": 1.5,
+      "fill_gap": 0.6,
+      "min_scale_px": 20,
+      "min_disp_sizes": 1.5
+    },
+    "jaywalking": {
+      "enabled": true,
+      "require_crosswalk_map": false,
+      "crosswalk_margin": 0.8,
+      "min_seconds": 1.5,
+      "fill_gap": 1.5,
+      "min_scale_px": 12
+    },
+    "failure_to_yield": {
+      "enabled": true,
+      "ped_margin": 0.15,
+      "vehicle_min_speed": 0.4,
+      "near_widths": 1.5
+    },
+    "red_light": {
+      "enabled": true,
+      "front_frac": 0.35,
+      "amber_is_red": false,
+      "exit_sizes": 6.0,
+      "max_seconds": 10.0,
+      "min_speed": 0.8,
+      "min_advance_sizes": 1.5
+    },
+    "stop_line": {
+      "enabled": true,
+      "past_sizes": 0.5,
+      "max_past_sizes": 3.0,
+      "stop_speed": 0.15,
+      "min_stop_seconds": 1.0
+    },
+    "turns": {
+      "enabled": true,
+      "u_turn_min_deg": 150,
+      "turn_min_deg": 45,
+      "settle_deg": 20,
+      "u_turn_prohibited_default": true,
+      "min_speed": 0.6,
+      "window_seconds": 1.0,
+      "min_disp_sizes": 0.8,
+      "min_scale_px": 20,
+      "u_turn_min_seconds": 1.5,
+      "u_turn_min_offset": 0.8
+    },
+    "solid_line_crossing": {
+      "enabled": true,
+      "min_side_seconds": 0.6
+    },
+    "accident": {
+      "enabled": true,
+      "min_score": 0.75,
+      "pre_moving_speed": 1.2,
+      "decel_ratio": 0.65,
+      "same_depth_frac": 0.3,
+      "stop_speed": 0.15,
+      "single_vehicle": false,
+      "single_min_speed": 1.6,
+      "max_seconds": 20.0,
+      "min_history": 1.0,
+      "min_scale_px": 35,
+      "rest_seconds": 2.0,
+      "closing_speed": 0.8,
+      "jam_radius_sizes": 6.0,
+      "jam_speed": 0.6
+    },
+    "near_miss": {
+      "enabled": true,
+      "ttc_max": 1.5,
+      "brake_ratio": 0.6,
+      "brake_window": 0.8,
+      "min_speed": 1.0,
+      "clear_seconds": 1.0,
+      "min_scale_px": 55,
+      "min_history": 1.5,
+      "brake_abs": 1.2,
+      "ahead_lateral": 1.0,
+      "max_gap": 3.0,
+      "swerve_deg_s": 0
+    },
+    "road_obstacle": {
+      "enabled": true,
+      "animal_classes": [15, 16, 17, 18, 19],
+      "min_seconds": 1.5,
+      "static_blobs": false
+    },
+    "fire_smoke": {
+      "enabled": false
+    }
+  },
+  "post": {
+    "_doc": "Per-class segment post-processing. offsets are added to start/end (tuned on dev labels by tools/tune.py).",
+    "default": {
+      "merge_gap": 1.0,
+      "min_len": 0.6,
+      "start_offset": 0.0,
+      "end_offset": 0.0
+    },
+    "congestion": {
+      "merge_gap": 5.0,
+      "min_len": 10.0
+    },
+    "stopped_vehicle": {
+      "merge_gap": 3.0,
+      "min_len": 10.0
+    },
+    "jaywalking": {
+      "merge_gap": 1.5,
+      "min_len": 1.0
+    },
+    "accident": {
+      "merge_gap": 2.0,
+      "min_len": 1.0
+    }
+  },
+  "risk": {
+    "imgsz_gpu": 960,
+    "imgsz_cpu": 640,
+    "ttc_mid": 0.9,
+    "ttc_width": 0.25,
+    "brake_weight": 0.3,
+    "base_weight": 0.08,
+    "half_life": 1.2,
+    "min_scale_px": 20,
+    "closing_min": 1.2,
+    "closing_span": 2.0,
+    "max_gap": 2.5,
+    "striker_min_speed": 1.5,
+    "min_age_seconds": 1.0
+  }
+}

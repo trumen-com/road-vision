@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.cache/
+.pytest_cache/
+samples/*.mp4
+dev_videos/
+predictions.json
+web/node_modules/
+web/.next/
+web/out/
+*.log
+.proxy/
+results/
+_to_delete/
+web/public/media/vehicles*
+*.part.mp4

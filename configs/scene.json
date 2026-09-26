@@ -1,0 +1,140 @@
+{
+ "_doc": "Scene map of the competition camera (Tashkent intersection), drawn on configs/scene_ref.jpg (1920x1080, sample C3896 at 30 s) with tools/scene_editor.html. At run time every video is aligned to that reference image (SIFT + similarity RANSAC), so small camera shifts between recordings move the map with them.",
+ "reference_size": [1920, 1080],
+ "reference_image": "configs/scene_ref.jpg",
+ "carriageway": [
+  [
+   [90, 80],
+   [560, 172],
+   [1000, 262],
+   [1250, 320],
+   [1700, 432],
+   [1920, 468],
+   [1920, 1080],
+   [0, 1080],
+   [0, 812],
+   [180, 746],
+   [345, 706],
+   [330, 612],
+   [250, 565],
+   [150, 330]
+  ]
+ ],
+ "exclude": [
+  [
+   [0, 360],
+   [180, 410],
+   [185, 540],
+   [0, 575]
+  ],
+  [
+   [1690, 375],
+   [1920, 375],
+   [1920, 490],
+   [1690, 490]
+  ],
+  [
+   [560, 280],
+   [640, 282],
+   [1205, 505],
+   [1190, 530],
+   [1090, 525]
+  ],
+  [
+   [1170, 540],
+   [1305, 535],
+   [1305, 575],
+   [1175, 575]
+  ],
+  [
+   [500, 770],
+   [630, 662],
+   [752, 738],
+   [745, 765]
+  ],
+  [
+   [672, 855],
+   [862, 808],
+   [958, 880],
+   [712, 900]
+  ],
+  [
+   [112, 935],
+   [330, 848],
+   [422, 915],
+   [125, 945]
+  ],
+  [
+   [0, 580],
+   [330, 610],
+   [345, 700],
+   [180, 740],
+   [0, 800]
+  ],
+  [
+   [560, 85],
+   [1010, 110],
+   [1010, 222],
+   [560, 205]
+  ]
+ ],
+ "crosswalks": [
+  [
+   [372, 598],
+   [1145, 513],
+   [1178, 550],
+   [400, 650]
+  ],
+  [
+   [1205, 505],
+   [1835, 465],
+   [1865, 497],
+   [1240, 548]
+  ],
+  [
+   [172, 752],
+   [345, 710],
+   [905, 1080],
+   [595, 1080]
+  ]
+ ],
+ "lanes": [],
+ "intersection": [
+  [358, 655],
+  [1185, 552],
+  [1920, 500],
+  [1920, 1080],
+  [905, 1080],
+  [345, 710]
+ ],
+ "stop_lines": [
+  {
+   "id": "queue_in",
+   "line": [
+    [275, 540],
+    [950, 470]
+   ],
+   "direction": [0.72, 0.69],
+   "signal": "queue",
+   "red_states": [
+    "red"
+   ],
+   "_note": "The pole head at the end of the median faces this approach: the queue discharges exactly when it reads green (checked on all four samples)."
+  }
+ ],
+ "signals": [
+  {
+   "id": "queue",
+   "roi": [
+    1138,
+    352,
+    1172,
+    418
+   ]
+  }
+ ],
+ "solid_lines": [],
+ "gates": [],
+ "allowed_movements": [],
+ "u_turn_allowed_zones": []
+}

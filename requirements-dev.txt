@@ -1,0 +1,5 @@
+-r requirements.txt
+pytest>=8
+fastapi>=0.115
+uvicorn>=0.30
+python-multipart>=0.0.9

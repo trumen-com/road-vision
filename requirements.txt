@@ -1,0 +1,7 @@
+# Submission runtime (Python 3.10-3.13). The default PyPI torch wheel on Linux ships CUDA 12.4 (T4 / sm_75 supported).
+torch==2.6.0
+torchvision==0.21.0
+ultralytics-opencv-headless==8.4.162   # same package as ultralytics, but depends on the headless OpenCV (no libGL needed)
+opencv-python-headless>=4.10,<4.14,!=4.13.0.90
+numpy>=1.24,<2.3
+scipy>=1.10,<1.16
