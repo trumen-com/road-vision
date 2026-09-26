@@ -5,7 +5,7 @@ WIUT Hackathon 2026, Computer Vision track (Toyota). Given a video from a fixed 
 * **Part A** returns every traffic event as `[start_sec, end_sec, label]` over the 14 official classes, and
 * **Part B** returns, frame by frame and from past frames only, the probability that an accident starts within 5 s.
 
-Website: **TODO-link** · Live demo: **TODO-link/demo** · Report: **TODO-link/report**
+Website: **https://trumen-com.github.io/road-vision/** · Live demo: **https://trumen-com.github.io/road-vision/demo/** · Report: **https://trumen-com.github.io/road-vision/report/**
 
 ## Run it
 
@@ -69,7 +69,7 @@ tools/
   export_site.py         EDA figures, annotated videos and JSON for the website
 tests/                   synthetic-trajectory tests for every rule (python -m pytest tests)
 demo/                    FastAPI live-demo backend + Dockerfile (CPU)
-web/                     Next.js website (static export)
+web/                     Next.js website (static export, deployed by .github/workflows/pages.yml)
 predictions_samples.json our output on the sample videos (python run_submission.py --videos samples)
 ```
 

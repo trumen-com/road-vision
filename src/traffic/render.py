@@ -14,7 +14,9 @@ import cv2
 import numpy as np
 
 from .config import CLASS_NAMES, PERSON, TWO_WHEELERS
+from .signals import GREEN, RED
 
+SIGNAL_COLORS = {RED: (40, 40, 235), GREEN: (60, 200, 60)}  # BGR
 EVENT_COLORS = {  # BGR
     "accident": (40, 40, 230), "near_miss": (0, 140, 255), "red_light": (60, 60, 200), "wrong_way": (200, 0, 200),
     "illegal_u_turn": (180, 60, 150), "stopped_vehicle": (0, 200, 255), "jaywalking": (255, 180, 0),
@@ -73,6 +75,17 @@ def render_video(video_path: str, analysis, out_path: str, risk: list | None = N
             if l == lab:
                 x0, x1 = int(s / dur * W), max(int(e / dur * W), int(s / dur * W) + 2)
                 cv2.rectangle(strip, (x0, 4 + r * row_h), (x1, 4 + (r + 1) * row_h - 2), EVENT_COLORS.get(lab, (200, 200, 200)), -1)
+    sig = getattr(analysis, "signals", None)
+    sig_id = next(iter(sig.states), None) if sig is not None and sig.states else None
+    if sig_id is not None:      # traffic-light band just above the risk line
+        st, ts = sig.states[sig_id], sig.t_arr
+        for k in range(len(ts)):
+            col = SIGNAL_COLORS.get(str(st[k]))
+            if col is None:
+                continue
+            x0 = int(ts[k] / dur * W)
+            x1 = int((ts[k + 1] if k + 1 < len(ts) else dur) / dur * W)
+            cv2.rectangle(strip, (x0, strip_h - 24), (max(x1, x0 + 1), strip_h - 21), col, -1)
     if risk_arr is not None and len(risk_arr):
         pts = [(int(t / dur * W), strip_h - 4 - int(v * 18)) for t, v in risk_arr[:: max(1, len(risk_arr) // W)]]
         cv2.polylines(strip, [np.array(pts, np.int32)], False, (80, 80, 255), 1)
@@ -125,6 +138,16 @@ def render_video(video_path: str, analysis, out_path: str, risk: list | None = N
             cv2.rectangle(frame, (W - bw - 12, 12), (W - 12, 34), (40, 40, 40), -1)
             cv2.rectangle(frame, (W - bw - 12, 12), (W - bw - 12 + int(bw * r), 34), (0, 0, 255) if r >= 0.5 else (0, 180, 255), -1)
             cv2.putText(frame, f"risk {r:.2f}", (W - bw - 6, 29), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
+        if sig_id is not None:
+            state = sig.state(sig_id, t)
+            col = SIGNAL_COLORS.get(state, (150, 150, 150))
+            x1, y1, x2, y2 = (np.asarray(sig.rois[sig_id], dtype=np.float32).reshape(-1)[:4] * scale).astype(int)
+            cv2.rectangle(frame, (x1 - 3, y1 - 3), (x2 + 3, y2 + 3), col, 2)
+            txt = f"LIGHT: {state.upper()}"
+            (tw, th), _ = cv2.getTextSize(txt, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 2)
+            cv2.rectangle(frame, (8, H - th - 22), (8 + tw + 30, H - 8), (30, 30, 30), -1)
+            cv2.circle(frame, (20, H - 15 - th // 2), 7, col, -1)
+            cv2.putText(frame, txt, (32, H - 14), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2, cv2.LINE_AA)
         cv2.putText(frame, f"{t:6.1f}s", (W - 90, H - 12), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 1, cv2.LINE_AA)
         bar = strip.copy()
         cv2.line(bar, (int(t / dur * W), 0), (int(t / dur * W), strip_h), (255, 255, 255), 1)

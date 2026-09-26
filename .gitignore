@@ -14,3 +14,6 @@ results/
 _to_delete/
 web/public/media/vehicles*
 *.part.mp4
+hf_space/
+web/public/data/videos/vehicles*
+web/public/media/eda/vehicles*

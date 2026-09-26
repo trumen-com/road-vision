@@ -37,14 +37,18 @@ function valueTicks(max: number, n = 4): number[] {
 }
 
 // ---------------------------------------------------------------- Timeline
-export function Timeline({ segments, duration, time, onSeek }: {
-  segments: Segment[]; duration: number; time?: number; onSeek?: (t: number) => void;
+const LIGHT_COLOR: Record<string, string> = { red: "#e5484d", green: "#30a46c" };
+
+export function Timeline({ segments, duration, time, onSeek, light = [] }: {
+  segments: Segment[]; duration: number; time?: number; onSeek?: (t: number) => void; light?: [number, number, string][];
 }) {
   const [ref, w] = useWidth<HTMLDivElement>();
   const [tip, setTip] = useState<{ x: number; y: number; text: string } | null>(null);
   const labels = Array.from(new Set(segments.map((s) => s[2])));
-  const left = Math.min(150, w * 0.32), right = 8, rowH = 22, top = 4;
+  const hasLight = light.length > 0;
+  const left = Math.min(150, w * 0.32), right = 8, rowH = 22, top = hasLight ? 4 + rowH : 4;
   const H = top + Math.max(1, labels.length) * rowH + 24;
+  const lightTop = 4;
   const x = (t: number) => left + (t / Math.max(duration, 1e-3)) * (w - left - right);
   const click = (ev: React.MouseEvent<SVGSVGElement>) => {
     if (!onSeek) return;
@@ -63,6 +67,20 @@ export function Timeline({ segments, duration, time, onSeek }: {
             <text x={x(t)} y={H - 6} textAnchor="middle">{fmtTime(t)}</text>
           </g>
         ))}
+        {hasLight && (
+          <g>
+            <text x={0} y={lightTop + 15} style={{ fill: "var(--text-2)", fontSize: 12 }}>Traffic light</text>
+            {light.map(([s, e, st], i) => (
+              <rect key={i} x={x(s)} y={lightTop + 7} width={Math.max(1, x(e) - x(s))} height={rowH - 14}
+                    fill={LIGHT_COLOR[st] ?? "var(--text-2)"}
+                    onMouseMove={(ev) => {
+                      const b = (ev.currentTarget.ownerSVGElement as SVGSVGElement).getBoundingClientRect();
+                      setTip({ x: ev.clientX - b.left, y: ev.clientY - b.top, text: `Light ${st} · ${fmtTime(s)}–${fmtTime(e)} (${(e - s).toFixed(1)} s)` });
+                    }}
+                    onMouseLeave={() => setTip(null)} />
+            ))}
+          </g>
+        )}
         {labels.length === 0 && <text x={left} y={top + 15}>No events detected</text>}
         {labels.map((lab, r) => (
           <g key={lab}>

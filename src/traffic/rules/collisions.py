@@ -45,6 +45,18 @@ def _shape_stable(tr, t0: float, t1: float, t2: float, tol: float = 0.35) -> boo
     return a0 is not None and a1 is not None and abs(np.log(a1 / max(a0, 1.0))) < tol
 
 
+def _continuous(tr, t0: float, t1: float, max_gap: float = 0.4) -> bool:
+    """The track was observed without a gap longer than max_gap in [t0, t1] (not lost behind another object).
+    The limit widens to 3 sampling steps when frames are sampled sparsely (CPU stride)."""
+    if len(tr.t) > 2:
+        max_gap = max(max_gap, 3.0 * float(np.median(np.diff(tr.t))))
+    ts = tr.t[(tr.t >= t0) & (tr.t <= t1)]
+    if len(ts) < 2:
+        return False
+    edges = np.concatenate([[max(t0, tr.t[0])], ts, [min(t1, tr.t[-1])]])
+    return float(np.diff(edges).max()) <= max_gap
+
+
 def _near_border(ctx: Context, tr) -> bool:
     x, y = tr.foot[-1]
     m = 0.04
@@ -64,7 +76,8 @@ def _impact(tr, fs, tc: float, p: dict) -> dict:
     res = {"moving": before is not None and before >= p["pre_moving_speed"], "decel": False, "shoved": False,
            "rest": rest is not None and rest < p["stop_speed"], "gone": False}
     if res["moving"] and after is not None:
-        res["decel"] = after <= (1 - p["decel_ratio"]) * before and _shape_stable(tr, tc - 1.0, tc, tc + 1.0)
+        res["decel"] = (after <= (1 - p["decel_ratio"]) * before and _shape_stable(tr, tc - 1.0, tc, tc + 1.0)
+                        and _continuous(tr, tc - 1.0, tc + 0.8))   # a speed "collapse" measured across an occlusion gap is not evidence
     # a stationary participant that is suddenly displaced by a real distance
     still = _window(tr, tr.speed, tc - 2.0, tc - 0.5, np.max)
     i0, i1 = tr.index_at(tc), tr.index_at(min(tc + 1.0, tr.t[-1]))

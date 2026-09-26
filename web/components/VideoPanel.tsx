@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { RiskChart, Timeline } from "@/components/charts";
 import { classColor, className } from "@/lib/classes";
-import { fmtTime, type VideoDoc } from "@/lib/data";
+import { fmtTime, lightRuns, type VideoDoc } from "@/lib/data";
 
 /** Annotated playback with a clickable event timeline, risk curve and event table. */
 export default function VideoPanel({ doc, videoUrl }: { doc: VideoDoc; videoUrl?: string }) {
@@ -13,6 +13,9 @@ export default function VideoPanel({ doc, videoUrl }: { doc: VideoDoc; videoUrl?
     if (ref.current) { ref.current.currentTime = t; ref.current.play().catch(() => undefined); }
     setTime(t);
   };
+  const light = lightRuns(doc);
+  const redSec = light.filter((r) => r[2] === "red").reduce((a, r) => a + r[1] - r[0], 0);
+  const greenSec = light.filter((r) => r[2] === "green").reduce((a, r) => a + r[1] - r[0], 0);
   const accidents = doc.segments.filter((s) => s[2] === "accident");
   const perClass = doc.segments.reduce<Record<string, number>>((m, s) => ({ ...m, [s[2]]: (m[s[2]] ?? 0) + 1 }), {});
   return (
@@ -23,8 +26,8 @@ export default function VideoPanel({ doc, videoUrl }: { doc: VideoDoc; videoUrl?
       )}
       <div className="card">
         <h3>Event timeline</h3>
-        <p className="muted">Click an event, or anywhere on the track, to jump the video there.</p>
-        <Timeline segments={doc.segments} duration={doc.duration} time={time} onSeek={seek} />
+        <p className="muted">Click an event, or anywhere on the track, to jump the video there.{light.length > 0 && " The top row is the traffic light we read from the signal head facing the camera."}</p>
+        <Timeline segments={doc.segments} duration={doc.duration} time={time} onSeek={seek} light={light} />
       </div>
       {doc.risk?.length > 0 && (
         <div className="card">
@@ -60,6 +63,10 @@ export default function VideoPanel({ doc, videoUrl }: { doc: VideoDoc; videoUrl?
               <tr><td>Duration</td><td>{doc.duration.toFixed(1)} s</td></tr>
               <tr><td>Frames analysed</td><td>{doc.stride === 1 ? "every frame" : `every ${doc.stride}${doc.stride === 2 ? "nd" : doc.stride === 3 ? "rd" : "th"} frame`} ({(doc.fps / doc.stride).toFixed(1)} per second)</td></tr>
               {doc.timings?.total_sec !== undefined && !doc.timings?.cached && <tr><td>Processing time</td><td>{String(doc.timings.total_sec)} s on {String(doc.timings.device ?? "")}</td></tr>}
+              {light.length > 0 && <tr><td>Traffic light (read)</td><td>
+                <span style={{ color: "#e5484d" }}>red {Math.round(100 * redSec / Math.max(redSec + greenSec, 1e-3))}%</span> ·{" "}
+                <span style={{ color: "#30a46c" }}>green {Math.round(100 * greenSec / Math.max(redSec + greenSec, 1e-3))}%</span> ·{" "}
+                {light.filter((r) => r[2] === "green").length} green phases</td></tr>}
               {Object.entries(perClass).map(([k, v]) => (
                 <tr key={k}><td><i className="dot" style={{ background: classColor(k) }} /> {className(k)}</td><td>{v}</td></tr>
               ))}

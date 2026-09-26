@@ -28,6 +28,31 @@ export interface VideoDoc {
   n_tracks?: Record<string, number>;
   timings?: Record<string, number | string | boolean>;
   media?: Record<string, string>;
+  signals?: { t: number[]; states: Record<string, string[]> };
+}
+
+export type LightRun = [number, number, string];
+
+/** Traffic-light state as runs [start, end, "red" | "green"] for the first signal head read in the video. */
+export function lightRuns(doc: VideoDoc): LightRun[] {
+  const sig = doc.signals;
+  const id = sig ? Object.keys(sig.states)[0] : undefined;
+  if (!sig || !id) return [];
+  const st = sig.states[id], t = sig.t, out: LightRun[] = [];
+  for (let i = 0; i < t.length; i++) {
+    const end = i + 1 < t.length ? t[i + 1] : doc.duration;
+    const last = out[out.length - 1];
+    if (last && last[2] === st[i]) last[1] = end;
+    else out.push([t[i], end, st[i]]);
+  }
+  // absorb flicker (runs under 2 s) into the previous phase, then re-merge equal neighbours
+  const merged: LightRun[] = [];
+  for (const r of out.filter((q) => q[2] === "red" || q[2] === "green")) {
+    const last = merged[merged.length - 1];
+    if (last && (last[2] === r[2] || r[1] - r[0] < 2)) last[1] = r[1];
+    else merged.push([...r] as LightRun);
+  }
+  return merged;
 }
 
 export interface IndexEntry {

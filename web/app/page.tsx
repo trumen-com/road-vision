@@ -1,12 +1,13 @@
 import Link from "next/link";
 import Pipeline from "@/components/Pipeline";
 import { CLASSES, FAMILY_COLOR } from "@/lib/classes";
+import { BASE } from "@/lib/data";
 
 const MODELS = [
   ["YOLO11m (COCO)", "Detects people, bikes, motorbikes, cars, buses, trucks, traffic lights and animals", "Ultralytics, AGPL-3.0", "Learned (pre-trained, not fine-tuned)"],
   ["ByteTrack-style tracker", "Two-stage association + Kalman filter; our own implementation", "Method: Zhang et al. 2022 (MIT)", "Algorithmic"],
   ["Flow field", "Dominant direction per image cell, learned from moving vehicles", "Ours", "Learned from the video itself"],
-  ["Traffic-light reader", "HSV colour of the lit lamp inside each signal ROI", "Ours", "Rule-based"],
+  ["Traffic-light reader", "Red-vs-green colour of the brightest lamp pixels in the signal head facing the camera, split into red / green over the whole video (shown live in the annotated videos and as the top timeline row)", "Ours", "Unsupervised (2-means per video); checked against the queue moving off on green"],
   ["Event rules", "One rule per class on trajectories + scene map", "Ours", "Rule-based, thresholds tuned on our dev labels"],
   ["Risk forecaster", "Causal time-to-collision + hard braking + density", "Ours", "Rule-based, calibrated to the metric"],
 ];
@@ -83,7 +84,7 @@ export default function Home() {
         RANSAC similarity transform, and the map moves with it. Footage from another camera does not match the
         reference and runs on what is learned from the video alone.
       </p>
-      <img className="fig" src="/scene_map.jpg" alt="Scene map drawn on the reference frame" style={{ marginBottom: 12 }} />
+      <img className="fig" src={`${BASE}/scene_map.jpg`} alt="Scene map drawn on the reference frame" style={{ marginBottom: 12 }} />
 
       <h2>Speed units without calibration</h2>
       <p>
