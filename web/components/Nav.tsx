@@ -32,7 +32,7 @@ export default function Nav() {
   return (
     <nav className="nav">
       <div className="wrap">
-        <Link href="/" className="brand">Tru<span>Minds</span></Link>
+        <Link href="/" className="brand">Tru<span>men</span></Link>
         {PAGES.map(([href, label]) => (
           <Link key={href} href={href} className={`link ${path === href || (href !== "/" && path?.startsWith(href)) ? "active" : ""}`}>
             {label}

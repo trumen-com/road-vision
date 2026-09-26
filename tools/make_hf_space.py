@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "hf_space"
 
 README = """---
-title: TruMinds Road Vision Demo
+title: Trumen Road Vision Demo
 emoji: 🚦
 colorFrom: blue
 colorTo: red
@@ -21,7 +21,7 @@ app_port: 7860
 pinned: false
 ---
 
-Live-demo backend for the TruMinds traffic-event detector (WIUT Hackathon 2026, CV track).
+Live-demo backend for the Trumen traffic-event detector (WIUT Hackathon 2026, CV track).
 POST an .mp4 (≤ 2 min, ≤ 100 MB) to `/api/jobs`, poll `/api/jobs/{id}`; the website renders the result.
 Source: https://github.com/trumen-com/road-vision
 """

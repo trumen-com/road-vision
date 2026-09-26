@@ -1,5 +1,5 @@
 """
-solution.py — TruMinds entry point for the WIUT Hackathon 2026 CV track.
+solution.py — Trumen entry point for the WIUT Hackathon 2026 CV track.
 
 The harness imports this module, then calls detect_events() (Part A) and
 streams frames through RiskEstimator (Part B). All logic lives in src/traffic;

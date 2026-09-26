@@ -18,7 +18,7 @@ export default function Report() {
         boundaries by per-class offsets tuned on our own labels. Part B runs a separate online tracker on the frames
         it is given and scores time-to-collision, hard braking and traffic density into a causal risk.
       </p>
-      <pre>{`pip install -r requirements.txt            # or: docker build -t truminds .
+      <pre>{`pip install -r requirements.txt            # or: docker build -t trumen .
 python run_submission.py --videos /data/test --out predictions.json
 python evaluate.py --pred predictions.json --gt ground_truth.json`}</pre>
 

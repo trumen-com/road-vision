@@ -1,4 +1,4 @@
-# TruMinds: traffic event detection and accident anticipation
+# Trumen: traffic event detection and accident anticipation
 
 WIUT Hackathon 2026, Computer Vision track (Toyota). Given a video from a fixed road camera, the system
 
@@ -15,7 +15,7 @@ python run_submission.py --videos /data/test --out predictions.json
 python evaluate.py --pred predictions.json --validate-only
 ```
 
-Or with Docker: `docker build -t truminds . && docker run --gpus all --network none -v /data/test:/data/test truminds`.
+Or with Docker: `docker build -t trumen . && docker run --gpus all --network none -v /data/test:/data/test trumen`.
 
 **Weights** are committed in `weights/` (YOLO11m 40 MB for the GPU run, YOLO11n 5.6 MB for CPU and the demo, YOLO11s for
 development). If they are missing, `bash weights/download.sh` fetches them once and checks their SHA-256. Nothing is
@@ -127,7 +127,7 @@ No footage from the competition camera other than the provided samples is used.
 * On GPU, the frame stride is fixed by config (no timing-dependent choices). The tracker has no randomness.
 * Floating-point differences between GPU models can move a box by a fraction of a pixel. This is the only source of
   non-determinism we know of.
-* `predictions_samples.json` is produced by `python run_submission.py --videos samples --out predictions_samples.json --team TruMinds`.
+* `predictions_samples.json` is produced by `python run_submission.py --videos samples --out predictions_samples.json --team Trumen`.
 * Dev labels of the samples: `data/dev_labels.json`; score them with `python evaluate.py --pred predictions_samples.json --gt data/dev_labels.json --per-video`.
 
 ## Development

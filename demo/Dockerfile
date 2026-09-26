@@ -1,6 +1,6 @@
 # Live-demo backend (CPU). Build from the repository root:
-#   docker build -f demo/Dockerfile -t truminds-demo .
-#   docker run -p 7860:7860 truminds-demo
+#   docker build -f demo/Dockerfile -t trumen-demo .
+#   docker run -p 7860:7860 trumen-demo
 # Works as a Hugging Face Docker Space, on Railway, Render or any container host ($PORT honoured).
 FROM python:3.11-slim
 

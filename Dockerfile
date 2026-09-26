@@ -1,6 +1,6 @@
 # Alternative to requirements.txt, same two commands inside the container:
-#   docker build -t truminds .
-#   docker run --gpus all --network none -v /data/test:/data/test truminds \
+#   docker build -t trumen .
+#   docker run --gpus all --network none -v /data/test:/data/test trumen \
 #       python run_submission.py --videos /data/test --out /data/test/predictions.json
 FROM pytorch/pytorch:2.6.0-cuda12.4-cudnn9-runtime
 WORKDIR /app

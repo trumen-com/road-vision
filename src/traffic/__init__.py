@@ -1,1 +1,1 @@
-"""TruMinds traffic-event detection and accident anticipation."""
+"""Trumen traffic-event detection and accident anticipation."""

@@ -38,7 +38,7 @@ from traffic.risk import CausalRisk  # noqa: E402
 MAX_BYTES = 100 * 1024 * 1024
 MAX_SECONDS = 125.0
 JOB_TTL = 3600
-WORK = Path(os.environ.get("DEMO_WORKDIR", "/tmp/truminds_jobs"))
+WORK = Path(os.environ.get("DEMO_WORKDIR", "/tmp/trumen_jobs"))
 WORK.mkdir(parents=True, exist_ok=True)
 
 # the demo has no 3x budget: spend more CPU time for denser sampling (better tracks)
@@ -46,7 +46,7 @@ PARAMS = load_params(overrides={"budget": {"part_a_factor": 4.0, "part_b_factor"
 SCENE = load_scene_dict()
 get_detector(PARAMS)            # load once at start-up
 
-app = FastAPI(title="TruMinds traffic demo")
+app = FastAPI(title="Trumen traffic demo")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 JOBS: dict[str, dict] = {}

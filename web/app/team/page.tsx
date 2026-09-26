@@ -3,7 +3,7 @@ import { LINKS, TEAM } from "@/content/team";
 export default function Team() {
   return (
     <>
-      <h1>Team TruMinds</h1>
+      <h1>Team Trumen</h1>
       <p className="lead">Three people, one submission. Who did what, and where to find our work.</p>
       <div className="grid cols-3">
         {TEAM.map((m) => (
