@@ -12,7 +12,7 @@ export const FINDINGS = [
     impact: "Lamp state is found by clustering the red-minus-green colour of the brightest lamp pixels over the whole video, not by fixed thresholds." },
   { title: "A busy pedestrian scene",
     text: "Three zebra crossings, two refuge islands and a bus stop generate constant pedestrian traffic; many people cross next to the markings or walk between queued cars.",
-    impact: "Jaywalking needs a hand-drawn carriageway and crosswalk map; people on islands, the median and sidewalks are excluded, and riders are filtered out." },
+    impact: "Jaywalking needs a hand-drawn carriageway and crosswalk map. A jaywalker must be well out on the road (not at a kerb or island edge) and move across the traffic direction; riders are filtered out." },
   { title: "Long stationary periods that are not events",
     text: "Cars wait tens of seconds at the stop line, buses dwell at the stop, and cars park along the left curb.",
     impact: "Stopped-vehicle ignores the stop-line queue, the bus stop and curb parking; only vehicles stopped elsewhere on the carriageway for 10 s or more count." },

@@ -10,6 +10,7 @@ export default function Team() {
           <div key={m.name} className="card">
             <h3>{m.name}</h3>
             <div className="pill" style={{ marginBottom: 10 }}>{m.role}</div>
+            {m.about && <p style={{ fontSize: 14, marginTop: 0 }}>{m.about}</p>}
             <ul style={{ paddingLeft: 18, margin: "0 0 10px" }}>{m.did.map((d) => <li key={d} style={{ color: "var(--text-2)" }}>{d}</li>)}</ul>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", fontSize: 14 }}>
               {m.github && <a href={m.github}>GitHub</a>}

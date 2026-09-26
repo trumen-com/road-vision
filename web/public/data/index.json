@@ -7,15 +7,13 @@
    "fps": 9.990001184108964,
    "width": 1280,
    "height": 720,
-   "events": 33,
+   "events": 16,
    "classes": [
     "congestion",
     "failure_to_yield",
-    "jaywalking",
     "near_miss",
     "red_light",
-    "stop_line",
-    "stopped_vehicle"
+    "stop_line"
    ]
   },
   {
@@ -25,11 +23,10 @@
    "fps": 9.99000999000999,
    "width": 1280,
    "height": 720,
-   "events": 40,
+   "events": 19,
    "classes": [
     "failure_to_yield",
     "jaywalking",
-    "near_miss",
     "red_light",
     "stop_line",
     "stopped_vehicle"
@@ -42,14 +39,13 @@
    "fps": 9.99000999000999,
    "width": 1280,
    "height": 720,
-   "events": 28,
+   "events": 15,
    "classes": [
     "failure_to_yield",
     "jaywalking",
     "near_miss",
     "red_light",
-    "stop_line",
-    "stopped_vehicle"
+    "stop_line"
    ]
   },
   {
@@ -59,11 +55,9 @@
    "fps": 9.990002162541645,
    "width": 1280,
    "height": 720,
-   "events": 18,
+   "events": 9,
    "classes": [
     "failure_to_yield",
-    "jaywalking",
-    "near_miss",
     "stop_line",
     "stopped_vehicle"
    ]

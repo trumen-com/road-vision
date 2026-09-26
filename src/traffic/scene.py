@@ -142,6 +142,15 @@ class Scene:
             return in_any(self.carriageway, x, y)
         return self.flow is not None and self.flow.drivable(x, y)
 
+    def deep_on_road(self, x: float, y: float, r: float) -> bool:
+        """On the carriageway with at least r px of carriageway all around (not at a kerb, island edge or verge)."""
+        if not self.on_road(x, y):
+            return False
+        for a in np.linspace(0, 2 * np.pi, 8, endpoint=False):
+            if not self.on_road(x + r * np.cos(a), y + r * np.sin(a)):
+                return False
+        return True
+
     def in_crosswalk(self, x: float, y: float, margin: float = 0.0) -> bool:
         return in_any(self.crosswalks, x, y, margin)
 

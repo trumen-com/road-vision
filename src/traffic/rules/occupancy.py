@@ -43,6 +43,13 @@ def _queued_at(ctx: Context, tr, i: int, direction: np.ndarray | None, p: dict) 
     return False
 
 
+def _slow_neighbourhood(ctx: Context, tr, i: int, p: dict) -> bool:
+    """Most vehicles around are stopped too: a queue or jam, even when the car right ahead was not tracked."""
+    near = [o.speed[k] for o, k in ctx.active(tr.t[i])
+            if o is not tr and o.is_vehicle and np.linalg.norm(o.foot[k] - tr.foot[i]) < p["jam_radius_sizes"] * tr.scale[i]]
+    return len(near) >= p["jam_min_vehicles"] and float(np.median(near)) < p["stop_speed"] * 3
+
+
 def stopped_vehicle(ctx: Context) -> list[RawEvent]:
     p = ctx.rule("stopped_vehicle")
     # 1. stationary runs per track
@@ -75,13 +82,16 @@ def stopped_vehicle(ctx: Context) -> list[RawEvent]:
         y = m["box"][3]
         if not ctx.scene.on_road(x, y) or np.sqrt((m["box"][2] - m["box"][0]) * (m["box"][3] - m["box"][1])) < p["min_scale_px"] * ctx.px:
             continue
+        # waiting inside the junction to turn is normal unless it lasts very long
+        if ctx.scene.in_intersection(x, y) and m["e"] - m["s"] < p["junction_wait_seconds"]:
+            continue
         checks = queued = 0
         for tr, i, j in m["parts"]:
             d = _approach_direction(ctx, tr, i)
             step = max(1, int(ctx.fps_eff))            # check about once per second
             for k in range(i, j + 1, step):
                 checks += 1
-                queued += _queued_at(ctx, tr, k, d, p)
+                queued += _queued_at(ctx, tr, k, d, p) or _slow_neighbourhood(ctx, tr, k, p)
         if checks and queued / checks >= p["queue_fraction"]:
             continue
         ids = tuple(tr.id for tr, _, _ in m["parts"])

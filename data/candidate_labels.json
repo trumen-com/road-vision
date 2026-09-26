@@ -4,18 +4,18 @@
   "fps": 29.97,
   "events": [
    [
-    14.21,
-    15.31,
+    14.71,
+    15.71,
     "failure_to_yield"
    ],
    [
-    19.22,
-    20.12,
+    16.72,
+    17.72,
     "failure_to_yield"
    ],
    [
-    45.65,
-    49.05,
+    45.95,
+    48.05,
     "failure_to_yield"
    ],
    [
@@ -24,19 +24,9 @@
     "congestion"
    ],
    [
-    47.45,
-    72.97,
-    "stopped_vehicle"
-   ],
-   [
     63.06,
     102.3,
     "stop_line"
-   ],
-   [
-    76.08,
-    97.1,
-    "stopped_vehicle"
    ],
    [
     78.88,
@@ -45,7 +35,7 @@
    ],
    [
     95.39,
-    97.5,
+    96.39,
     "failure_to_yield"
    ],
    [
@@ -54,118 +44,43 @@
     "near_miss"
    ],
    [
-    107.61,
-    116.92,
-    "jaywalking"
-   ],
-   [
-    110.91,
-    111.71,
-    "failure_to_yield"
-   ],
-   [
-    112.91,
-    114.51,
-    "near_miss"
-   ],
-   [
-    119.22,
-    125.33,
-    "jaywalking"
-   ],
-   [
     126.0,
     182.0,
     "congestion"
    ],
    [
-    127.73,
-    129.93,
-    "jaywalking"
-   ],
-   [
-    135.74,
-    145.85,
-    "stopped_vehicle"
-   ],
-   [
-    137.24,
-    140.14,
-    "jaywalking"
-   ],
-   [
-    153.45,
-    155.96,
-    "jaywalking"
-   ],
-   [
     156.86,
-    158.76,
+    159.36,
     "failure_to_yield"
    ],
    [
     160.56,
-    163.26,
+    162.96,
     "failure_to_yield"
    ],
    [
-    166.97,
-    169.57,
-    "jaywalking"
-   ],
-   [
-    175.38,
-    176.08,
+    218.42,
+    219.42,
     "failure_to_yield"
    ],
    [
-    178.68,
-    179.78,
+    220.82,
+    221.82,
     "failure_to_yield"
    ],
    [
-    180.98,
-    184.18,
-    "jaywalking"
-   ],
-   [
-    184.08,
-    193.99,
-    "failure_to_yield"
-   ],
-   [
-    194.29,
-    208.21,
-    "stopped_vehicle"
-   ],
-   [
-    195.8,
-    217.32,
-    "failure_to_yield"
-   ],
-   [
-    223.22,
+    223.62,
     224.62,
     "failure_to_yield"
    ],
    [
-    224.02,
-    225.22,
-    "near_miss"
+    288.19,
+    289.19,
+    "failure_to_yield"
    ],
    [
-    241.94,
-    244.24,
-    "jaywalking"
-   ],
-   [
-    245.85,
-    259.36,
-    "jaywalking"
-   ],
-   [
-    267.87,
-    329.53,
+    304.61,
+    306.4,
     "failure_to_yield"
    ]
   ]
@@ -175,38 +90,18 @@
   "fps": 29.97,
   "events": [
    [
-    3.1,
-    6.61,
+    3.7,
+    5.81,
     "jaywalking"
    ],
    [
     5.11,
-    7.61,
+    6.11,
     "failure_to_yield"
    ],
    [
-    8.11,
-    21.72,
-    "jaywalking"
-   ],
-   [
-    32.73,
-    39.24,
-    "jaywalking"
-   ],
-   [
-    40.84,
-    44.95,
-    "jaywalking"
-   ],
-   [
-    42.34,
-    60.06,
-    "failure_to_yield"
-   ],
-   [
-    48.75,
-    52.65,
+    11.01,
+    17.12,
     "jaywalking"
    ],
    [
@@ -216,18 +111,8 @@
    ],
    [
     78.38,
-    96.1,
+    85.99,
     "jaywalking"
-   ],
-   [
-    122.22,
-    124.42,
-    "jaywalking"
-   ],
-   [
-    129.93,
-    138.04,
-    "failure_to_yield"
    ],
    [
     131.03,
@@ -240,14 +125,14 @@
     "stop_line"
    ],
    [
-    132.83,
-    147.75,
-    "jaywalking"
-   ],
-   [
     135.34,
     182.88,
     "stopped_vehicle"
+   ],
+   [
+    139.44,
+    147.75,
+    "jaywalking"
    ],
    [
     151.35,
@@ -255,84 +140,24 @@
     "jaywalking"
    ],
    [
-    157.56,
-    169.67,
-    "jaywalking"
-   ],
-   [
     157.76,
-    158.56,
+    158.96,
     "failure_to_yield"
    ],
    [
-    159.66,
-    160.36,
+    180.78,
+    181.78,
     "failure_to_yield"
-   ],
-   [
-    177.58,
-    178.38,
-    "failure_to_yield"
-   ],
-   [
-    180.28,
-    181.18,
-    "failure_to_yield"
-   ],
-   [
-    191.39,
-    203.7,
-    "stopped_vehicle"
-   ],
-   [
-    192.59,
-    193.29,
-    "failure_to_yield"
-   ],
-   [
-    221.52,
-    223.42,
-    "failure_to_yield"
-   ],
-   [
-    225.93,
-    227.93,
-    "jaywalking"
    ],
    [
     234.63,
-    236.94,
+    236.54,
     "jaywalking"
    ],
    [
     236.64,
-    237.54,
+    237.64,
     "failure_to_yield"
-   ],
-   [
-    240.84,
-    244.44,
-    "jaywalking"
-   ],
-   [
-    248.85,
-    250.75,
-    "failure_to_yield"
-   ],
-   [
-    265.56,
-    268.47,
-    "jaywalking"
-   ],
-   [
-    266.67,
-    280.28,
-    "stopped_vehicle"
-   ],
-   [
-    268.77,
-    270.07,
-    "near_miss"
    ],
    [
     281.88,
@@ -340,38 +165,23 @@
     "red_light"
    ],
    [
-    290.49,
-    291.09,
-    "failure_to_yield"
+    294.89,
+    298.3,
+    "jaywalking"
    ],
    [
-    294.89,
-    300.7,
-    "jaywalking"
+    299.0,
+    300.0,
+    "failure_to_yield"
    ],
    [
     306.61,
-    307.21,
-    "failure_to_yield"
-   ],
-   [
-    308.81,
-    318.02,
-    "jaywalking"
-   ],
-   [
-    309.51,
-    310.21,
+    307.61,
     "failure_to_yield"
    ],
    [
     312.11,
-    312.81,
-    "failure_to_yield"
-   ],
-   [
-    316.02,
-    316.72,
+    313.11,
     "failure_to_yield"
    ]
   ]
@@ -381,29 +191,19 @@
   "fps": 29.97,
   "events": [
    [
-    23.52,
-    24.32,
+    12.51,
+    13.51,
     "failure_to_yield"
    ],
    [
-    25.02,
-    27.23,
-    "jaywalking"
-   ],
-   [
-    26.93,
-    28.43,
+    23.52,
+    24.52,
     "failure_to_yield"
    ],
    [
     53.05,
     54.15,
     "failure_to_yield"
-   ],
-   [
-    53.65,
-    76.88,
-    "stopped_vehicle"
    ],
    [
     74.88,
@@ -416,28 +216,8 @@
     "stop_line"
    ],
    [
-    80.48,
-    116.12,
-    "jaywalking"
-   ],
-   [
-    117.62,
-    122.42,
-    "jaywalking"
-   ],
-   [
-    130.93,
-    140.34,
-    "jaywalking"
-   ],
-   [
-    144.44,
-    162.16,
-    "stopped_vehicle"
-   ],
-   [
-    147.35,
-    191.59,
+    82.68,
+    98.1,
     "jaywalking"
    ],
    [
@@ -446,8 +226,18 @@
     "red_light"
    ],
    [
+    166.57,
+    187.49,
+    "jaywalking"
+   ],
+   [
     172.17,
-    172.77,
+    173.17,
+    "failure_to_yield"
+   ],
+   [
+    174.88,
+    175.88,
     "failure_to_yield"
    ],
    [
@@ -456,43 +246,8 @@
     "failure_to_yield"
    ],
    [
-    211.91,
-    213.11,
-    "near_miss"
-   ],
-   [
-    222.42,
-    225.12,
-    "jaywalking"
-   ],
-   [
-    226.13,
-    243.04,
-    "stopped_vehicle"
-   ],
-   [
-    226.73,
-    229.23,
-    "jaywalking"
-   ],
-   [
-    234.13,
-    235.84,
-    "jaywalking"
-   ],
-   [
     252.55,
-    270.97,
-    "jaywalking"
-   ],
-   [
-    268.57,
-    270.37,
-    "failure_to_yield"
-   ],
-   [
-    280.48,
-    283.58,
+    263.26,
     "jaywalking"
    ],
    [
@@ -502,17 +257,7 @@
    ],
    [
     288.49,
-    289.39,
-    "failure_to_yield"
-   ],
-   [
-    292.29,
-    303.9,
-    "stopped_vehicle"
-   ],
-   [
-    305.4,
-    306.81,
+    289.49,
     "failure_to_yield"
    ],
    [
@@ -527,64 +272,34 @@
   "fps": 29.97,
   "events": [
    [
-    1.4,
+    9.61,
     36.34,
     "stopped_vehicle"
    ],
    [
-    14.31,
-    16.82,
-    "jaywalking"
-   ],
-   [
-    18.42,
-    33.53,
-    "jaywalking"
-   ],
-   [
-    18.52,
-    21.82,
+    15.02,
+    16.02,
     "failure_to_yield"
    ],
    [
-    26.23,
-    27.93,
+    18.52,
+    19.52,
+    "failure_to_yield"
+   ],
+   [
+    24.22,
+    25.22,
     "failure_to_yield"
    ],
    [
     37.14,
-    37.84,
+    38.14,
     "failure_to_yield"
    ],
    [
-    42.34,
-    43.34,
+    39.54,
+    40.54,
     "failure_to_yield"
-   ],
-   [
-    50.25,
-    51.55,
-    "near_miss"
-   ],
-   [
-    59.46,
-    116.72,
-    "stopped_vehicle"
-   ],
-   [
-    60.36,
-    61.56,
-    "failure_to_yield"
-   ],
-   [
-    69.67,
-    71.67,
-    "jaywalking"
-   ],
-   [
-    74.27,
-    79.28,
-    "jaywalking"
    ],
    [
     75.78,
@@ -592,28 +307,13 @@
     "stop_line"
    ],
    [
-    81.58,
+    81.78,
     84.78,
     "failure_to_yield"
    ],
    [
-    99.7,
-    100.5,
-    "failure_to_yield"
-   ],
-   [
-    101.8,
-    102.8,
-    "failure_to_yield"
-   ],
-   [
-    105.5,
-    113.51,
-    "jaywalking"
-   ],
-   [
-    109.71,
-    110.91,
+    108.11,
+    111.51,
     "failure_to_yield"
    ]
   ]

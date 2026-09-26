@@ -9,7 +9,21 @@
     "conf": 0.2,
     "iou": 0.6,
     "batch": 8,
-    "classes": [0, 1, 2, 3, 5, 7, 9, 14, 15, 16, 17, 18, 19]
+    "classes": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      7,
+      9,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ]
   },
   "budget": {
     "_doc": "Fraction of video duration each part may use in wall-clock time (official limit: A+B <= 3.0x). Strides adapt to measured throughput.",
@@ -33,7 +47,10 @@
     "stitch_max_dist": 0.8
   },
   "flow": {
-    "grid": [48, 27],
+    "grid": [
+      48,
+      27
+    ],
     "min_support": 15,
     "min_coherence": 0.65,
     "min_speed": 0.6
@@ -48,7 +65,10 @@
       "queue_ahead_sizes": 3.5,
       "queue_fraction": 0.5,
       "stopline_sizes": 6.0,
-      "min_scale_px": 22
+      "min_scale_px": 22,
+      "junction_wait_seconds": 40.0,
+      "jam_radius_sizes": 5.0,
+      "jam_min_vehicles": 3
     },
     "congestion": {
       "enabled": true,
@@ -76,13 +96,16 @@
       "crosswalk_margin": 0.8,
       "min_seconds": 1.5,
       "fill_gap": 1.5,
-      "min_scale_px": 12
+      "min_scale_px": 12,
+      "road_depth": 0.8,
+      "min_disp_sizes": 1.5
     },
     "failure_to_yield": {
       "enabled": true,
       "ped_margin": 0.15,
       "vehicle_min_speed": 0.4,
-      "near_widths": 1.5
+      "near_widths": 1.0,
+      "road_depth": 0.6
     },
     "red_light": {
       "enabled": true,
@@ -141,16 +164,23 @@
       "brake_window": 0.8,
       "min_speed": 1.0,
       "clear_seconds": 1.0,
-      "min_scale_px": 55,
+      "min_scale_px": 75,
       "min_history": 1.5,
       "brake_abs": 1.2,
       "ahead_lateral": 1.0,
       "max_gap": 3.0,
-      "swerve_deg_s": 0
+      "swerve_deg_s": 0,
+      "closing_min": 1.5
     },
     "road_obstacle": {
       "enabled": true,
-      "animal_classes": [15, 16, 17, 18, 19],
+      "animal_classes": [
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
       "min_seconds": 1.5,
       "static_blobs": false
     },

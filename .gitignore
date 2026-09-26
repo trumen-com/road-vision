@@ -10,8 +10,8 @@ web/.next/
 web/out/
 *.log
 .proxy/
-results/
-_to_delete/
+/results/
+/_to_delete/
 web/public/media/vehicles*
 *.part.mp4
 hf_space/

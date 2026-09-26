@@ -211,7 +211,8 @@ def near_miss(ctx: Context, accidents: list[RawEvent]) -> list[RawEvent]:
                 continue
             low = _window(tr, tr.speed, t + 0.3, t + p["brake_window"], np.max, coverage=0.9)
             braking = low is not None and (base - low) >= max(p["brake_ratio"] * base, p["brake_abs"]) \
-                and _shape_stable(tr, t - 0.6, t, t + p["brake_window"] + 0.4)
+                and _shape_stable(tr, t - 0.6, t, t + p["brake_window"] + 0.4) \
+                and _continuous(tr, t - 0.6, t + p["brake_window"])
             swerve = p["swerve_deg_s"] > 0 and abs(np.degrees(yaw[k])) > p["swerve_deg_s"] and tr.speed[k] > 2 * p["min_speed"]
             if not (braking or swerve) or _in_jam(ctx, (tr,), t + 0.5, ctx.rule("accident")):
                 k += 1
@@ -228,6 +229,10 @@ def near_miss(ctx: Context, accidents: list[RawEvent]) -> list[RawEvent]:
                 if along <= 0 or lateral > p["ahead_lateral"] * 0.5 * ((tr.box[k, 2] - tr.box[k, 0]) + (o.box[j, 2] - o.box[j, 0])):
                     continue
                 if ellipse_distance(tr.box[k], o.box[j]) > p["max_gap"]:
+                    continue
+                # closing fast on it (braking behind a car in slow traffic is normal driving)
+                closing = float((tr.vel[k] - o.vel[j]) @ heading) / max(tr.scale[k], 4.0)
+                if closing < p["closing_min"]:
                     continue
                 ttc = time_to_collision(tr.box[k], tr.vel[k], o.box[j], o.vel[j])
                 if ttc < ttc_min:

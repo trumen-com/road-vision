@@ -148,6 +148,6 @@ Environment overrides for experiments: `TRAFFIC_WEIGHTS`, `TRAFFIC_IMGSZ`, `TRAF
 
 | Member | Role | Contributions |
 |---|---|---|
-| Asilbek Shodmonov | Website, demo, tooling | Website and live demo, scene-map and labelling tools, deployment |
-| Komron Akmalov | TODO | TODO |
-| TODO | TODO | TODO |
+| Asilbek Shodmonov | Website, live demo & product | Website and live demo, scene-map and labelling tools, deployment |
+| Komron Akmalov | Computer vision & modelling | Detection and tracking pipeline, event rules, scene alignment, traffic-light reader, risk estimator |
+| Ashraf Shermatov | Project management, data & evaluation | Planning and submission checklist, EDA, labelling and error review, technical report |
