@@ -1,0 +1,819 @@
+{
+ "vehicle": "Toyota Camry 2025 (XV80) Hybrid",
+ "identified_by": "badge and wrap text visible in the photos (set by hand in this demo)",
+ "units": "metres",
+ "scale_from": "published overall length 4,915 mm",
+ "source": "95 views: 29 s walk-around video (3 fps) + 9 photos",
+ "measured_extent_m": [
+  4.92,
+  1.93,
+  1.36
+ ],
+ "published_extent_m": [
+  4.915,
+  1.84,
+  1.445
+ ],
+ "parts": [
+  {
+   "id": 0,
+   "key": "back-bumper",
+   "name": "Rear bumper",
+   "side": "center",
+   "points": 7941,
+   "views": 4,
+   "size_m": [
+    0.69,
+    1.83,
+    0.43
+   ],
+   "center_m": [
+    -2.27,
+    -0.06,
+    0.46
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+rear+bumper+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+rear+bumper",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-bumper/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+rear+bumper"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid rear bumper"
+  },
+  {
+   "id": 1,
+   "key": "left_back-door",
+   "name": "Left rear door",
+   "side": "left",
+   "points": 9141,
+   "views": 5,
+   "size_m": [
+    0.99,
+    0.21,
+    0.74
+   ],
+   "center_m": [
+    -0.65,
+    0.85,
+    0.65
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rear+door+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rear+door",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-door/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rear+door"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left rear door"
+  },
+  {
+   "id": 2,
+   "key": "right_back-door",
+   "name": "Right rear door",
+   "side": "right",
+   "points": 10097,
+   "views": 5,
+   "size_m": [
+    1.0,
+    0.21,
+    0.87
+   ],
+   "center_m": [
+    -0.73,
+    -0.92,
+    0.62
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rear+door+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rear+door",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-door/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rear+door"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right rear door"
+  },
+  {
+   "id": 3,
+   "key": "left_back-wheel",
+   "name": "Left rear wheel",
+   "side": "left",
+   "points": 4113,
+   "views": 5,
+   "size_m": [
+    0.58,
+    0.1,
+    0.6
+   ],
+   "center_m": [
+    -1.36,
+    0.88,
+    0.27
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+wheel+rim+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+wheel+rim",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-wheel/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+wheel+rim"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left wheel rim"
+  },
+  {
+   "id": 4,
+   "key": "right_back-wheel",
+   "name": "Right rear wheel",
+   "side": "right",
+   "points": 4043,
+   "views": 6,
+   "size_m": [
+    0.62,
+    0.09,
+    0.61
+   ],
+   "center_m": [
+    -1.4,
+    -0.92,
+    0.25
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+wheel+rim+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+wheel+rim",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-wheel/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+wheel+rim"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right wheel rim"
+  },
+  {
+   "id": 5,
+   "key": "left_back-window",
+   "name": "Left rear door glass",
+   "side": "left",
+   "points": 5333,
+   "views": 4,
+   "size_m": [
+    0.92,
+    0.23,
+    0.34
+   ],
+   "center_m": [
+    -0.66,
+    0.67,
+    1.09
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rear+door+window+glass+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rear+door+window+glass",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-door-glass/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rear+door+window+glass"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left rear door window glass"
+  },
+  {
+   "id": 6,
+   "key": "right_back-window",
+   "name": "Right rear door glass",
+   "side": "right",
+   "points": 5225,
+   "views": 5,
+   "size_m": [
+    0.93,
+    0.21,
+    0.34
+   ],
+   "center_m": [
+    -0.78,
+    -0.74,
+    1.09
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rear+door+window+glass+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rear+door+window+glass",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-door-glass/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rear+door+window+glass"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right rear door window glass"
+  },
+  {
+   "id": 7,
+   "key": "back-windshield",
+   "name": "Rear windshield",
+   "side": "center",
+   "points": 8614,
+   "views": 3,
+   "size_m": [
+    0.71,
+    1.13,
+    0.25
+   ],
+   "center_m": [
+    -1.76,
+    -0.03,
+    1.15
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+rear+windshield+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+rear+windshield",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-windshield/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+rear+windshield"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid rear windshield"
+  },
+  {
+   "id": 8,
+   "key": "left_fender",
+   "name": "Left front fender",
+   "side": "left",
+   "points": 4677,
+   "views": 6,
+   "size_m": [
+    0.8,
+    0.2,
+    0.55
+   ],
+   "center_m": [
+    1.37,
+    0.78,
+    0.72
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+front+fender+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+front+fender",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-fender/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+front+fender"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left front fender"
+  },
+  {
+   "id": 9,
+   "key": "right_fender",
+   "name": "Right front fender",
+   "side": "right",
+   "points": 3173,
+   "views": 6,
+   "size_m": [
+    0.8,
+    0.18,
+    0.53
+   ],
+   "center_m": [
+    1.4,
+    -0.96,
+    0.73
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+front+fender+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+front+fender",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-fender/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+front+fender"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right front fender"
+  },
+  {
+   "id": 10,
+   "key": "front-bumper",
+   "name": "Front bumper",
+   "side": "center",
+   "points": 18594,
+   "views": 4,
+   "size_m": [
+    0.65,
+    1.8,
+    0.56
+   ],
+   "center_m": [
+    2.23,
+    -0.14,
+    0.43
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+front+bumper+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+front+bumper",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-bumper/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+front+bumper"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid front bumper"
+  },
+  {
+   "id": 11,
+   "key": "left_front-door",
+   "name": "Left front door",
+   "side": "left",
+   "points": 11397,
+   "views": 6,
+   "size_m": [
+    1.19,
+    0.24,
+    0.81
+   ],
+   "center_m": [
+    0.41,
+    0.83,
+    0.59
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+front+door+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+front+door",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-door/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+front+door"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left front door"
+  },
+  {
+   "id": 12,
+   "key": "right_front-door",
+   "name": "Right front door",
+   "side": "right",
+   "points": 6904,
+   "views": 7,
+   "size_m": [
+    1.18,
+    0.14,
+    0.66
+   ],
+   "center_m": [
+    0.42,
+    -0.98,
+    0.57
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+front+door+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+front+door",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-door/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+front+door"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right front door"
+  },
+  {
+   "id": 13,
+   "key": "left_front-wheel",
+   "name": "Left front wheel",
+   "side": "left",
+   "points": 4715,
+   "views": 7,
+   "size_m": [
+    0.63,
+    0.1,
+    0.58
+   ],
+   "center_m": [
+    1.48,
+    0.81,
+    0.27
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+wheel+rim+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+wheel+rim",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-wheel/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+wheel+rim"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left wheel rim"
+  },
+  {
+   "id": 14,
+   "key": "right_front-wheel",
+   "name": "Right front wheel",
+   "side": "right",
+   "points": 5193,
+   "views": 5,
+   "size_m": [
+    0.56,
+    0.15,
+    0.65
+   ],
+   "center_m": [
+    1.44,
+    -0.93,
+    0.22
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+wheel+rim+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+wheel+rim",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-wheel/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+wheel+rim"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right wheel rim"
+  },
+  {
+   "id": 15,
+   "key": "left_front-window",
+   "name": "Left front door glass",
+   "side": "left",
+   "points": 6021,
+   "views": 4,
+   "size_m": [
+    1.03,
+    0.29,
+    0.37
+   ],
+   "center_m": [
+    0.24,
+    0.6,
+    1.06
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+front+door+window+glass+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+front+door+window+glass",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-door-glass/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+front+door+window+glass"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left front door window glass"
+  },
+  {
+   "id": 16,
+   "key": "right_front-window",
+   "name": "Right front door glass",
+   "side": "right",
+   "points": 3068,
+   "views": 6,
+   "size_m": [
+    0.97,
+    0.21,
+    0.36
+   ],
+   "center_m": [
+    0.18,
+    -0.79,
+    1.08
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+front+door+window+glass+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+front+door+window+glass",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-door-glass/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+front+door+window+glass"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right front door window glass"
+  },
+  {
+   "id": 17,
+   "key": "grille",
+   "name": "Front grille",
+   "side": "center",
+   "points": 513,
+   "views": 6,
+   "size_m": [
+    0.13,
+    0.47,
+    0.25
+   ],
+   "center_m": [
+    2.41,
+    0.32,
+    0.34
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+front+grille+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+front+grille",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-front-grille/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+front+grille"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid front grille"
+  },
+  {
+   "id": 18,
+   "key": "left_headlight",
+   "name": "Left headlight",
+   "side": "left",
+   "points": 732,
+   "views": 6,
+   "size_m": [
+    0.43,
+    0.29,
+    0.13
+   ],
+   "center_m": [
+    2.04,
+    0.67,
+    0.67
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+headlight+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+headlight",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-headlight/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+headlight"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left headlight"
+  },
+  {
+   "id": 19,
+   "key": "right_headlight",
+   "name": "Right headlight",
+   "side": "right",
+   "points": 810,
+   "views": 5,
+   "size_m": [
+    0.42,
+    0.3,
+    0.15
+   ],
+   "center_m": [
+    2.0,
+    -0.83,
+    0.66
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+headlight+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+headlight",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-headlight/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+headlight"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right headlight"
+  },
+  {
+   "id": 20,
+   "key": "hood",
+   "name": "Hood (bonnet)",
+   "side": "center",
+   "points": 39309,
+   "views": 6,
+   "size_m": [
+    1.14,
+    1.48,
+    0.31
+   ],
+   "center_m": [
+    1.8,
+    -0.05,
+    0.83
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+hood+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+hood",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-hood/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+hood"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid hood"
+  },
+  {
+   "id": 21,
+   "key": "left_mirror",
+   "name": "Left side mirror",
+   "side": "left",
+   "points": 826,
+   "views": 4,
+   "size_m": [
+    0.38,
+    0.21,
+    0.2
+   ],
+   "center_m": [
+    0.74,
+    0.76,
+    0.91
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+side+mirror+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+side+mirror",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-side-mirror/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+side+mirror"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left side mirror"
+  },
+  {
+   "id": 22,
+   "key": "right_mirror",
+   "name": "Right side mirror",
+   "side": "right",
+   "points": 548,
+   "views": 3,
+   "size_m": [
+    0.35,
+    0.18,
+    0.19
+   ],
+   "center_m": [
+    0.74,
+    -1.0,
+    0.95
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+side+mirror+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+side+mirror",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-side-mirror/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+side+mirror"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right side mirror"
+  },
+  {
+   "id": 23,
+   "key": "left_quarter-panel",
+   "name": "Left rear quarter panel",
+   "side": "left",
+   "points": 4893,
+   "views": 4,
+   "size_m": [
+    1.04,
+    0.28,
+    0.54
+   ],
+   "center_m": [
+    -1.64,
+    0.81,
+    0.84
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rear+quarter+panel+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rear+quarter+panel",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-quarter-panel/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rear+quarter+panel"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left rear quarter panel"
+  },
+  {
+   "id": 24,
+   "key": "right_quarter-panel",
+   "name": "Right rear quarter panel",
+   "side": "right",
+   "points": 5303,
+   "views": 5,
+   "size_m": [
+    0.88,
+    0.26,
+    0.51
+   ],
+   "center_m": [
+    -1.72,
+    -0.82,
+    0.84
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rear+quarter+panel+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rear+quarter+panel",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rear-quarter-panel/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rear+quarter+panel"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right rear quarter panel"
+  },
+  {
+   "id": 25,
+   "key": "left_rocker-panel",
+   "name": "Left rocker panel (side sill)",
+   "side": "left",
+   "points": 1862,
+   "views": 5,
+   "size_m": [
+    1.96,
+    0.08,
+    0.11
+   ],
+   "center_m": [
+    0.04,
+    0.87,
+    0.18
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rocker+panel+side+skirt+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rocker+panel+side+skirt",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rocker-panel/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+rocker+panel+side+skirt"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left rocker panel side skirt"
+  },
+  {
+   "id": 26,
+   "key": "right_rocker-panel",
+   "name": "Right rocker panel (side sill)",
+   "side": "right",
+   "points": 506,
+   "views": 5,
+   "size_m": [
+    1.82,
+    0.1,
+    0.1
+   ],
+   "center_m": [
+    0.29,
+    -0.97,
+    0.17
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rocker+panel+side+skirt+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rocker+panel+side+skirt",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-rocker-panel/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+rocker+panel+side+skirt"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right rocker panel side skirt"
+  },
+  {
+   "id": 27,
+   "key": "roof",
+   "name": "Roof panel",
+   "side": "center",
+   "points": 12316,
+   "views": 4,
+   "size_m": [
+    2.26,
+    1.1,
+    0.11
+   ],
+   "center_m": [
+    -0.43,
+    -0.07,
+    1.33
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+roof+panel+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+roof+panel",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-roof-panel/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+roof+panel"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid roof panel"
+  },
+  {
+   "id": 28,
+   "key": "left_tail-light",
+   "name": "Left tail light",
+   "side": "left",
+   "points": 527,
+   "views": 4,
+   "size_m": [
+    0.39,
+    0.45,
+    0.13
+   ],
+   "center_m": [
+    -2.2,
+    0.71,
+    0.78
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+left+tail+light+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+left+tail+light",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-tail-light/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+left+tail+light"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid left tail light"
+  },
+  {
+   "id": 29,
+   "key": "right_tail-light",
+   "name": "Right tail light",
+   "side": "right",
+   "points": 591,
+   "views": 4,
+   "size_m": [
+    0.37,
+    0.39,
+    0.13
+   ],
+   "center_m": [
+    -2.2,
+    -0.73,
+    0.78
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+right+tail+light+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+right+tail+light",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-tail-light/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+right+tail+light"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid right tail light"
+  },
+  {
+   "id": 30,
+   "key": "trunk",
+   "name": "Trunk lid",
+   "side": "center",
+   "points": 6477,
+   "views": 4,
+   "size_m": [
+    0.36,
+    1.28,
+    0.43
+   ],
+   "center_m": [
+    -2.25,
+    0.0,
+    0.92
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+trunk+lid+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+trunk+lid",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-trunk-lid/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+trunk+lid"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid trunk lid"
+  },
+  {
+   "id": 31,
+   "key": "windshield",
+   "name": "Windshield",
+   "side": "center",
+   "points": 28684,
+   "views": 4,
+   "size_m": [
+    0.92,
+    1.33,
+    0.36
+   ],
+   "center_m": [
+    0.86,
+    -0.02,
+    1.11
+   ],
+   "search": {
+    "google": "https://www.google.com/search?q=Toyota+Camry+2025+%28XV80%29+Hybrid+windshield+OEM+part+number",
+    "ebay": "https://www.ebay.com/sch/i.html?_nkw=Toyota+Camry+2025+%28XV80%29+Hybrid+windshield",
+    "olx_uz": "https://www.olx.uz/list/q-Camry-75-windshield/",
+    "amazon": "https://www.amazon.com/s?k=Toyota+Camry+2025+%28XV80%29+Hybrid+windshield"
+   },
+   "query": "Toyota Camry 2025 (XV80) Hybrid windshield"
+  }
+ ]
+}

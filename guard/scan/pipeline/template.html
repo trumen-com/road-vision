@@ -1,0 +1,185 @@
+<title>Camry Parts Scan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* layout: header, then the 3D stage (left) and the parts catalogue (right); stacks on phones. Palette follows Trumen: asphalt, sign blue, caution yellow */
+:root{--bg:#F2F3F1;--panel:#FFFFFF;--fg:#22252A;--muted:#5C636B;--line:#D8DBD6;--accent:#1D5AA6;--accent-ink:#FFFFFF;--hi:#F2C230;--stage:#E6E8E4;--chip:#EEF1F5;
+--display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#191B1F;--panel:#22252A;--fg:#ECEDEB;--muted:#A2A8AF;--line:#353940;--accent:#6E9FE0;--accent-ink:#0F1A2A;--hi:#F2C230;--stage:#131518;--chip:#2A3038;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#191B1F;--panel:#22252A;--fg:#ECEDEB;--muted:#A2A8AF;--line:#353940;--accent:#6E9FE0;--accent-ink:#0F1A2A;--hi:#F2C230;--stage:#131518;--chip:#2A3038;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--body);margin:0;padding-inline:16px;padding-block:18px}
+.wrap{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+header h1{font:700 clamp(28px,4vw,40px)/1.02 var(--display);margin:0;text-wrap:balance}
+header p{margin:6px 0 0;color:var(--muted);max-width:70ch}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.stage{position:relative;background:var(--stage);border:1px solid var(--line);border-radius:10px;overflow:hidden;aspect-ratio:16/10;max-width:100%;touch-action:none;cursor:grab}
+.stage:active{cursor:grabbing}
+canvas{display:block;width:100%;height:100%}
+.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--muted);pointer-events:none}
+.nogl{position:absolute;inset:0;display:grid;place-items:center;padding:20px;text-align:center;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-top:10px}
+.controls label{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+input[type=range]{width:160px;accent-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg button{border:0;border-radius:0}
+button{font:500 13px var(--body);color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:6px 11px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+aside{display:flex;flex-direction:column;gap:14px;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card h2{font:700 21px/1.15 var(--display);margin:0 0 4px}
+.muted{color:var(--muted)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:10px 0;font-variant-numeric:tabular-nums;font-size:14px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;text-align:right}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.links a{font:600 13px var(--body);text-decoration:none;color:var(--accent);background:var(--chip);border-radius:6px;padding:6px 10px}
+.links a:hover{text-decoration:underline}
+.q{font:12px/1.4 var(--mono);color:var(--muted);margin-top:8px;word-break:break-word}
+.list{max-height:420px;overflow:auto;padding:4px 0}
+.list h3{font:600 12px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:10px 16px 4px}
+.list button{display:flex;width:100%;justify-content:space-between;gap:8px;border:0;border-radius:0;background:transparent;padding:6px 16px;text-align:left;font-weight:400}
+.list button:hover{background:var(--chip)}
+.list button[aria-pressed="true"]{background:var(--chip);color:var(--fg);box-shadow:inset 3px 0 0 var(--hi)}
+.sw{width:10px;height:10px;border-radius:2px;flex:none;margin-top:5px}
+.list .nm{display:flex;gap:8px;min-width:0}
+.list .ct{color:var(--muted);font-variant-numeric:tabular-nums;font-size:13px}
+.lower{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:900px){.lower{grid-template-columns:minmax(0,1fr)}}
+.lower h2{font:700 19px/1.2 var(--display);margin:0 0 6px}
+.lower p,.lower li{font-size:14px} .lower ul{margin:0;padding-left:18px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+td,th{padding:4px 0;border-bottom:1px solid var(--line);text-align:right} td:first-child,th:first-child{text-align:left}
+th{font-weight:500;color:var(--muted)}
+code{font:12.5px var(--mono)}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+</style>
+<div class="wrap">
+<header>
+ <h1>Toyota Camry, scanned and taken apart</h1>
+ <p>One phone walk-around of a Royal Motors test-drive Camry, rebuilt in 3D and split into 32 exterior parts. Pick a part to see its size and search for it.</p>
+</header>
+<div class="grid">
+ <main style="min-width:0">
+  <div class="stage" id="stage"><canvas id="cv"></canvas><div class="hint">Drag to orbit · scroll or pinch to zoom · tap a part</div></div>
+  <div class="controls">
+   <label for="ex">Take apart <input id="ex" type="range" min="0" max="1" step="0.01" value="0"></label>
+   <span class="seg" role="group" aria-label="Colour"><button id="cPhoto" aria-pressed="true">Photo colour</button><button id="cPart" aria-pressed="false">Part colour</button></span>
+   <button id="spin" aria-pressed="false">Auto-rotate</button>
+   <button id="reset">Reset view</button>
+  </div>
+ </main>
+ <aside>
+  <div class="card" id="detail"></div>
+  <div class="card" style="padding:0"><div class="list" id="list"></div></div>
+ </aside>
+</div>
+<div class="lower">
+ <section><h2>How it was built</h2>
+  <ul>
+   <li>Camera positions for all 95 views (video frames at 3 fps plus 9 photos) by Structure from Motion.</li>
+   <li>Every frame split into car parts by a segmentation model, then given depth by a monocular depth network, aligned to the 3D points of that view.</li>
+   <li>Kept only points seen in at least 3 views; each point takes the part most views agree on. Left and right come from the car's own axes.</li>
+  </ul>
+ </section>
+ <section><h2>Size check</h2>
+  <table id="dims"><tr><th></th><th>Scan</th><th>Published</th></tr></table>
+  <p class="muted" style="margin-top:6px">Length is used to set the scale, so only width and height are a real test. Width includes the mirrors in the scan.</p>
+ </section>
+ <section><h2>Use it in other apps</h2>
+  <p>The scan exports as <code>camry_parts.glb</code> (one named node per part) and <code>parts.json</code> (names, sides, sizes, centres, search queries). Any 3D viewer, AR app, parts shop or insurance tool can read them.</p>
+  <div class="links" style="margin-top:8px"><button id="copyJson">Copy parts.json</button></div>
+ </section>
+</div>
+<footer>Exterior parts only: hidden parts are not visible to a camera and would come from the official parts catalogue by VIN. The number plate is removed from the scan, and only pixels on the car are used, so people around it are not in the model. Models used: car-parts segmentation by mitbersh/AutoInspect (YOLO26-s, Hugging Face; licence not stated by the author, used here for a demo), Depth Anything V2 Small (Apache-2.0), COLMAP via pycolmap (BSD). Part searches go to public search pages; part numbers are not verified.</footer>
+</div>
+<script>
+const D=__DATA__, M=D.meta, PARTS=M.parts;
+function dec(b){const s=atob(b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u}
+const POS=new Int16Array(dec(D.p).buffer), COL=dec(D.c), LAB=dec(D.l), N=D.n, S=D.S;
+// part colours: spread hues, steady lightness so both themes work
+const PAL=PARTS.map((p,i)=>{const h=(i*137.508)%360;return hsl(h,0.62,0.55)});
+function hsl(h,s,l){const a=s*Math.min(l,1-l),f=n=>{const k=(n+h/30)%12;return l-a*Math.max(-1,Math.min(k-3,9-k,1))};return [f(0),f(8),f(4)]}
+const GROUPS=[["Front",["front-bumper","grille","hood","headlight","windshield"]],["Left side",null,"left"],["Right side",null,"right"],["Rear",["back-bumper","trunk","tail-light","back-windshield"]],["Top",["roof"]]];
+function groupOf(p){const b=p.key.replace(/^(left|right)_/,"");if(p.side==="left")return "Left side";if(p.side==="right")return "Right side";for(const [g,ks] of GROUPS)if(ks&&ks.includes(b))return g;return "Top"}
+// offsets for taking apart (metres, car frame x fwd, y left, z up)
+const OFF=PARTS.map(p=>{const [x,y,z]=p.center_m;const b=p.key.replace(/^(left|right)_/,"");let o=[x*0.55,y*2.2,(z-0.65)*1.3];
+ if(b==="hood")o=[0.6,0,0.9]; if(b==="roof")o=[0,0,1.0]; if(b==="trunk")o=[-0.5,0,0.8]; if(b==="windshield")o=[0.35,0,0.75]; if(b==="back-windshield")o=[-0.35,0,0.7];
+ if(b==="front-bumper")o=[0.9,0,-0.05]; if(b==="back-bumper")o=[-0.9,0,-0.05]; if(b==="grille")o=[1.25,0,0.05];
+ if(b.endsWith("wheel"))o=[x*0.15,Math.sign(y)*1.3,-0.05]; if(b==="mirror")o=[0.1,Math.sign(y)*1.5,0.25]; if(b.endsWith("window"))o=[0,Math.sign(y)*1.0,0.45];
+ if(b==="rocker-panel")o=[0,Math.sign(y)*1.6,-0.35]; return o});
+let sel=-1, mode=0, ex=0, yaw=-0.75, pitch=0.32, dist=5.6, spin=false;
+// ---------- list + detail
+const list=document.getElementById("list"), detail=document.getElementById("detail");
+const hex=c=>"#"+c.map(v=>Math.round(v*255).toString(16).padStart(2,"0")).join("");
+let html="";for(const [g] of GROUPS){const ps=PARTS.filter(p=>groupOf(p)===g);if(!ps.length)continue;html+=`<h3>${g}</h3>`;
+ for(const p of ps)html+=`<button data-id="${p.id}" aria-pressed="false"><span class="nm"><span class="sw" style="background:${hex(PAL[p.id])}"></span><span>${p.name}</span></span><span class="ct">${p.size_m[0].toFixed(2)} m</span></button>`}
+list.innerHTML=html;
+list.addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(b)select(+b.dataset.id===sel?-1:+b.dataset.id)});
+function select(i){sel=i;for(const b of list.querySelectorAll("button"))b.setAttribute("aria-pressed",String(+b.dataset.id===i));renderDetail();draw()}
+function renderDetail(){
+ if(sel<0){detail.innerHTML=`<h2>${M.vehicle}</h2><p class="muted">${PARTS.length} exterior parts from a 29-second walk-around video and 9 photos. Choose a part in the list or tap it in 3D.</p>
+ <dl class="kv"><dt>Points in the model</dt><dd>${PARTS.reduce((a,p)=>a+p.points,0).toLocaleString("en-US")}</dd><dt>Scale set from</dt><dd>length 4.915 m</dd></dl>`;return}
+ const p=PARTS[sel];const [l,w,h]=p.size_m;
+ detail.innerHTML=`<h2>${p.name}</h2><p class="muted">${M.vehicle}</p>
+ <dl class="kv"><dt>Size (L × W × H)</dt><dd>${l.toFixed(2)} × ${w.toFixed(2)} × ${h.toFixed(2)} m</dd><dt>Position from centre</dt><dd>${p.center_m.map(v=>(v>=0?"+":"")+v.toFixed(2)).join(", ")} m</dd><dt>Points</dt><dd>${p.points.toLocaleString("en-US")}</dd><dt>Seen in</dt><dd>${p.views}+ views per point</dd></dl>
+ <div class="links"><a href="${p.search.google}" target="_blank" rel="noopener">Google</a><a href="${p.search.ebay}" target="_blank" rel="noopener">eBay</a><a href="${p.search.olx_uz}" target="_blank" rel="noopener">OLX.uz</a><a href="${p.search.amazon}" target="_blank" rel="noopener">Amazon</a></div>
+ <div class="q">${p.query}</div>`}
+renderDetail();
+const dims=document.getElementById("dims");["Length","Width","Height"].forEach((n,i)=>{dims.insertAdjacentHTML("beforeend",`<tr><td>${n}</td><td>${M.measured_extent_m[i].toFixed(2)} m</td><td>${M.published_extent_m[i].toFixed(2)} m</td></tr>`)});
+document.getElementById("copyJson").addEventListener("click",async e=>{const t=JSON.stringify(M,null,1);try{await navigator.clipboard.writeText(t);e.target.textContent="Copied"}catch{e.target.textContent="Copy failed"};setTimeout(()=>e.target.textContent="Copy parts.json",1600)});
+// ---------- WebGL
+const cv=document.getElementById("cv"), st=document.getElementById("stage");
+const gl=cv.getContext("webgl",{antialias:true});
+if(!gl){st.insertAdjacentHTML("beforeend",'<div class="nogl">This browser has WebGL turned off, so the 3D view cannot draw. The parts list still works.</div>')}
+let prog,uni={};
+if(gl){
+ const vs=`attribute vec3 p;attribute vec3 c;attribute float l;uniform mat4 mvp;uniform vec3 off[${PARTS.length}];uniform vec3 pal[${PARTS.length}];uniform float ex,sel,mode,ps,S;varying vec3 vc;varying float va;
+ void main(){int i=int(l+0.5);vec3 o=vec3(0.);vec3 pc=vec3(0.);for(int k=0;k<${PARTS.length};k++){if(k==i){o=off[k];pc=pal[k];}}
+ vec3 w=p*S+o*ex;gl_Position=mvp*vec4(w.y*-1.0,w.z,w.x,1.0);vec3 col=mode>0.5?pc:c;float on=(sel<0.0||abs(l-sel)<0.5)?1.0:0.0;
+ vc=mix(col*0.35+vec3(0.5)*0.25,col,on);va=on;gl_PointSize=ps*(on>0.5&&sel>=0.0?1.5:1.0)/gl_Position.w;}`;
+ const fs=`precision mediump float;varying vec3 vc;varying float va;void main(){vec2 d=gl_PointCoord-0.5;if(dot(d,d)>0.25)discard;gl_FragColor=vec4(vc,1.0);}`;
+ const sh=(t,s)=>{const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(o));return o};
+ prog=gl.createProgram();gl.attachShader(prog,sh(gl.VERTEX_SHADER,vs));gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(prog);gl.useProgram(prog);
+ const buf=(data,name,size,type,norm)=>{const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);const a=gl.getAttribLocation(prog,name);gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,size,type,norm,0,0)};
+ buf(POS,"p",3,gl.SHORT,true);buf(COL,"c",3,gl.UNSIGNED_BYTE,true);buf(new Float32Array(LAB),"l",1,gl.FLOAT,false);
+ for(const n of ["mvp","off","pal","ex","sel","mode","ps","S"])uni[n]=gl.getUniformLocation(prog,n);
+ gl.uniform3fv(uni.off,new Float32Array(OFF.flat()));gl.uniform3fv(uni.pal,new Float32Array(PAL.flat()));gl.uniform1f(uni.S,S);gl.enable(gl.DEPTH_TEST);
+}
+function mats(){const W=cv.width,H=cv.height,f=1/Math.tan(0.42),a=W/H,n=0.1,fa=60;
+ const P=[f/a,0,0,0, 0,f,0,0, 0,0,(fa+n)/(n-fa),-1, 0,0,2*fa*n/(n-fa),0];
+ const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+ const dd=dist*(1+0.45*ex);const eye=[dd*cp*sy,0.55+dd*sp,dd*cp*cy],tg=[0,0.55,0];
+ let z=[eye[0]-tg[0],eye[1]-tg[1],eye[2]-tg[2]];let zl=Math.hypot(...z);z=z.map(v=>v/zl);let x=[z[2],0,-z[0]];let xl=Math.hypot(...x);x=x.map(v=>v/xl);const y=[z[1]*x[2]-z[2]*x[1],z[2]*x[0]-z[0]*x[2],z[0]*x[1]-z[1]*x[0]];
+ const V=[x[0],y[0],z[0],0, x[1],y[1],z[1],0, x[2],y[2],z[2],0, -(x[0]*eye[0]+x[1]*eye[1]+x[2]*eye[2]),-(y[0]*eye[0]+y[1]*eye[1]+y[2]*eye[2]),-(z[0]*eye[0]+z[1]*eye[1]+z[2]*eye[2]),1];
+ const R=new Array(16).fill(0);for(let i=0;i<4;i++)for(let j=0;j<4;j++)for(let k=0;k<4;k++)R[j*4+i]+=P[k*4+i]*V[j*4+k];return R}
+function draw(){if(!gl)return;const css=getComputedStyle(document.documentElement).getPropertyValue("--stage").trim();const c=parseInt(css.slice(1),16);
+ gl.viewport(0,0,cv.width,cv.height);gl.clearColor((c>>16&255)/255,(c>>8&255)/255,(c&255)/255,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+ gl.uniformMatrix4fv(uni.mvp,false,new Float32Array(mats()));gl.uniform1f(uni.ex,ex);gl.uniform1f(uni.sel,sel);gl.uniform1f(uni.mode,mode);gl.uniform1f(uni.ps,cv.height*0.0095);
+ gl.drawArrays(gl.POINTS,0,N)}
+function size(){const r=st.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);draw()}
+new ResizeObserver(size).observe(st);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",draw);
+// ---------- interaction
+const ptrs=new Map();let moved=0;
+st.addEventListener("pointerdown",e=>{st.setPointerCapture(e.pointerId);ptrs.set(e.pointerId,[e.clientX,e.clientY]);moved=0;setSpin(false)});
+st.addEventListener("pointermove",e=>{if(!ptrs.has(e.pointerId))return;const p=ptrs.get(e.pointerId);
+ if(ptrs.size===1){const dx=e.clientX-p[0],dy=e.clientY-p[1];moved+=Math.abs(dx)+Math.abs(dy);yaw-=dx*0.008;pitch=Math.max(-0.15,Math.min(1.45,pitch+dy*0.006));ptrs.set(e.pointerId,[e.clientX,e.clientY]);draw()}
+ else{const [a,b]=[...ptrs.values()];const d0=Math.hypot(a[0]-b[0],a[1]-b[1]);ptrs.set(e.pointerId,[e.clientX,e.clientY]);const [c,d]=[...ptrs.values()];const d1=Math.hypot(c[0]-d[0],c[1]-d[1]);if(d0>0)dist=Math.max(3,Math.min(16,dist*d0/d1));moved+=99;draw()}});
+st.addEventListener("pointerup",e=>{ptrs.delete(e.pointerId);if(moved<6)pick(e)});st.addEventListener("pointercancel",e=>ptrs.delete(e.pointerId));
+st.addEventListener("wheel",e=>{e.preventDefault();dist=Math.max(3,Math.min(16,dist*Math.exp(e.deltaY*0.0012)));draw()},{passive:false});
+function pick(e){if(!gl)return;const r=cv.getBoundingClientRect(),mx=(e.clientX-r.left)/r.width*2-1,my=1-(e.clientY-r.top)/r.height*2,m=mats();let best=-1,bd=1e9,bz=1e9;const tol=(14/r.width)*2;
+ for(let i=0;i<N;i++){const l=LAB[i],o=OFF[l];const px=POS[3*i]/32767*S+o[0]*ex,py=POS[3*i+1]/32767*S+o[1]*ex,pz=POS[3*i+2]/32767*S+o[2]*ex;const X=-py,Y=pz,Z=px;
+  const cw=m[3]*X+m[7]*Y+m[11]*Z+m[15];if(cw<=0)continue;const cx=(m[0]*X+m[4]*Y+m[8]*Z+m[12])/cw,cy=(m[1]*X+m[5]*Y+m[9]*Z+m[13])/cw;const dd=Math.hypot(cx-mx,cy-my);
+  if(dd<tol&&cw<bz-0.15){bz=cw;best=l;bd=dd}}
+ select(best)}
+const exEl=document.getElementById("ex");exEl.addEventListener("input",()=>{ex=+exEl.value;draw()});
+const cP=document.getElementById("cPhoto"),cQ=document.getElementById("cPart");
+cP.onclick=()=>{mode=0;cP.setAttribute("aria-pressed","true");cQ.setAttribute("aria-pressed","false");draw()};
+cQ.onclick=()=>{mode=1;cQ.setAttribute("aria-pressed","true");cP.setAttribute("aria-pressed","false");draw()};
+const spinB=document.getElementById("spin");function setSpin(v){spin=v;spinB.setAttribute("aria-pressed",String(v))}
+spinB.onclick=()=>setSpin(!spin);
+document.getElementById("reset").onclick=()=>{yaw=-0.75;pitch=0.32;dist=5.6;ex=0;exEl.value=0;select(-1)};
+(function loop(){if(spin){yaw+=0.004;draw()}requestAnimationFrame(loop)})();
+</script>

@@ -1,0 +1,6 @@
+[
+ {"file": "cutin_highway.mp4", "title": "Highway cut-in", "note": "A car swerves into our lane from the right"},
+ {"file": "truck_night.mp4", "title": "Truck at night", "note": "City at night, a truck cuts across close"},
+ {"file": "van_rain.mp4", "title": "Van in the rain", "note": "Wipers on, a van pulls into our path"},
+ {"file": "normal_city.mp4", "title": "Normal driving", "note": "No danger: it should stay quiet"}
+]

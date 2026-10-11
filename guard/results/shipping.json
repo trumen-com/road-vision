@@ -1,0 +1,152 @@
+{
+ "alert": {
+  "caution": 0.5,
+  "brake": 0.75,
+  "release": 0.35
+ },
+ "train_operating_point": {
+  "threshold": 0.85,
+  "warned": 0.24666666666666667,
+  "fa_per_hour": 48.64864864864853
+ },
+ "fa_budget": 60.0,
+ "curve": [
+  {
+   "threshold": 0.3,
+   "warned": 0.96,
+   "fa_per_hour": 317.2737955346643
+  },
+  {
+   "threshold": 0.325,
+   "warned": 0.9533333333333334,
+   "fa_per_hour": 310.92831962397105
+  },
+  {
+   "threshold": 0.35,
+   "warned": 0.9466666666666667,
+   "fa_per_hour": 315.1586368977666
+  },
+  {
+   "threshold": 0.375,
+   "warned": 0.9333333333333333,
+   "fa_per_hour": 319.3889541715621
+  },
+  {
+   "threshold": 0.4,
+   "warned": 0.92,
+   "fa_per_hour": 317.2737955346643
+  },
+  {
+   "threshold": 0.425,
+   "warned": 0.8933333333333333,
+   "fa_per_hour": 310.92831962397105
+  },
+  {
+   "threshold": 0.45,
+   "warned": 0.88,
+   "fa_per_hour": 300.35252643948223
+  },
+  {
+   "threshold": 0.475,
+   "warned": 0.8666666666666667,
+   "fa_per_hour": 304.5828437132778
+  },
+  {
+   "threshold": 0.5,
+   "warned": 0.8533333333333334,
+   "fa_per_hour": 310.92831962397105
+  },
+  {
+   "threshold": 0.525,
+   "warned": 0.84,
+   "fa_per_hour": 302.46768507638
+  },
+  {
+   "threshold": 0.55,
+   "warned": 0.84,
+   "fa_per_hour": 283.4312573443001
+  },
+  {
+   "threshold": 0.575,
+   "warned": 0.8066666666666666,
+   "fa_per_hour": 268.62514688601584
+  },
+  {
+   "threshold": 0.6,
+   "warned": 0.7466666666666667,
+   "fa_per_hour": 262.2796709753225
+  },
+  {
+   "threshold": 0.625,
+   "warned": 0.6933333333333334,
+   "fa_per_hour": 241.12808460634488
+  },
+  {
+   "threshold": 0.65,
+   "warned": 0.6666666666666666,
+   "fa_per_hour": 234.78260869565162
+  },
+  {
+   "threshold": 0.675,
+   "warned": 0.64,
+   "fa_per_hour": 209.40070505287846
+  },
+  {
+   "threshold": 0.7,
+   "warned": 0.6266666666666667,
+   "fa_per_hour": 190.3642773207986
+  },
+  {
+   "threshold": 0.725,
+   "warned": 0.5933333333333334,
+   "fa_per_hour": 164.98237367802545
+  },
+  {
+   "threshold": 0.75,
+   "warned": 0.56,
+   "fa_per_hour": 137.48531139835455
+  },
+  {
+   "threshold": 0.775,
+   "warned": 0.4866666666666667,
+   "fa_per_hour": 109.98824911868364
+  },
+  {
+   "threshold": 0.8,
+   "warned": 0.4066666666666667,
+   "fa_per_hour": 99.41245593419482
+  },
+  {
+   "threshold": 0.825,
+   "warned": 0.3466666666666667,
+   "fa_per_hour": 76.14571092831945
+  },
+  {
+   "threshold": 0.85,
+   "warned": 0.24666666666666667,
+   "fa_per_hour": 48.64864864864853
+  },
+  {
+   "threshold": 0.875,
+   "warned": 0.18,
+   "fa_per_hour": 38.07285546415972
+  },
+  {
+   "threshold": 0.9,
+   "warned": 0.12666666666666668,
+   "fa_per_hour": 19.03642773207986
+  },
+  {
+   "threshold": 0.925,
+   "warned": 0.09333333333333334,
+   "fa_per_hour": 8.460634547591049
+  },
+  {
+   "threshold": 0.95,
+   "warned": 0.04,
+   "fa_per_hour": 8.460634547591049
+  }
+ ],
+ "chosen_on": "Nexar training split, out-of-fold, budget 60 false warnings per hour",
+ "raw_threshold": 0.85
+}

@@ -1,11 +1,24 @@
-# Trumen: traffic event detection and accident anticipation
+# Trumen: road vision (WIUT Hackathon 2026, Computer Vision track)
+
+## Final: Trumen Guard, collision warning on any phone
+
+**Mode: Partner product (Toyota and BYD Royal Motors after-sales).** Code, run instructions, test results, data
+licences and the built-during-the-final declaration: **[guard/README.md](guard/README.md)**.
+Live: **https://trumen-com.github.io/road-vision/** (deployed from this repository by `.github/workflows/pages.yml`).
+Defence deck: `guard/deck/Trumen_Guard_defence.pdf`. Backup demo recording: `guard/demo/backup.mp4`. Add-on built during the final: **Trumen Scan**, a car rebuilt in 3D from a phone walk-around and split into parts (https://trumen-com.github.io/road-vision/scan/, `guard/scan/`).
+
+The elimination-round work below is unchanged; its website moved to https://trumen-com.github.io/road-vision/elimination/.
+
+---
+
+## Elimination round: traffic event detection and accident anticipation
 
 WIUT Hackathon 2026, Computer Vision track (Toyota). Given a video from a fixed road camera, the system
 
 * **Part A** returns every traffic event as `[start_sec, end_sec, label]` over the 14 official classes, and
 * **Part B** returns, frame by frame and from past frames only, the probability that an accident starts within 5 s.
 
-Website: **https://trumen-com.github.io/road-vision/** · Live demo: **https://trumen-com.github.io/road-vision/demo/** · Report: **https://trumen-com.github.io/road-vision/report/**
+Website: **https://trumen-com.github.io/road-vision/elimination/** · Live demo: **https://trumen-com.github.io/road-vision/elimination/demo/** · Report: **https://trumen-com.github.io/road-vision/elimination/report/**
 
 ## Run it
 

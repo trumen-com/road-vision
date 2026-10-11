@@ -1,9 +1,12 @@
 name: Deploy website to GitHub Pages
 
+# Builds two sites into one Pages deployment:
+#   /road-vision/              Trumen Guard (final product, guard/app, Vite)
+#   /road-vision/elimination/  elimination-round results site (web/, Next.js static export)
 on:
   push:
     branches: [main]
-    paths: ["web/**", ".github/workflows/pages.yml"]
+    paths: ["guard/**", "web/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -18,25 +21,33 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: web
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - run: npm ci
-      - run: npm run build
+      - name: Build Trumen Guard
+        working-directory: guard
         env:
-          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip   # onnxruntime-node is only used by the offline evaluation
+        run: |
+          npm ci
+          BASE_PATH=/${{ github.event.repository.name }}/ npx vite build app --outDir ../../site --emptyOutDir
+      - name: Build the elimination site
+        working-directory: web
+        run: |
+          npm ci
+          npm run build
+          mkdir -p ../site/elimination && cp -r out/. ../site/elimination/
+          # Paint Check keeps its old address /paint/ (static files, no base path inside)
+          if [ -d public/paint ]; then cp -r public/paint ../site/paint; fi
+        env:
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}/elimination
           NEXT_PUBLIC_API_URL: ${{ vars.DEMO_API_URL }}
-      - run: touch out/.nojekyll
+      - run: touch site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web/out
+          path: site
 
   deploy:
     needs: build

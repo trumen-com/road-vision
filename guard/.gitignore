@@ -1,0 +1,8 @@
+node_modules/
+dist/
+results/*.jsonl
+results/folds/
+results/*_tl.json
+results/*timeline*.json
+deck/slide-*.jpg
+yolo11n.pt

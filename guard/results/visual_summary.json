@@ -1,0 +1,8 @@
+{
+ "val_ap": 0.27459970374147435,
+ "test_public_map": 0.6233796004034144,
+ "n_test": 667,
+ "n_train_videos": 473,
+ "n_val_videos": 118,
+ "minutes": 57.34689490397771
+}

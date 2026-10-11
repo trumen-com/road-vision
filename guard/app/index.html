@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#23262B" />
+  <title>Trumen Guard: collision warning on any phone</title>
+  <meta name="description" content="Forward-collision and pedestrian warning that runs inside the phone browser. Built by team Trumen for Toyota and BYD Royal Motors." />
+  <script src="coi-serviceworker.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 28H2z' fill='%23F2C230' stroke='%2323262B' stroke-width='2'/%3E%3Cpath d='M16 11v9' stroke='%2323262B' stroke-width='3'/%3E%3Ccircle cx='16' cy='24' r='1.8' fill='%2323262B'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#drive" aria-label="Trumen Guard home"><span class="sign" aria-hidden="true"></span>Trumen Guard</a>
+    <nav aria-label="Sections">
+      <a href="#drive" data-nav="drive">Drive</a>
+      <a href="#results" data-nav="results">Test results</a>
+      <a href="#how" data-nav="how">How it works</a>
+      <a href="#business" data-nav="business">For Royal Motors</a>
+      <a href="#about" data-nav="about">Team &amp; data</a>
+      <a href="scan/">3D parts scan</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ DRIVE (live demo) ============ -->
+    <section id="page-drive" class="page drive" data-page="drive">
+      <div class="band" id="band" role="status" aria-live="assertive">
+        <span class="band-word" id="bandWord">Watching the road</span>
+        <span class="band-detail" id="bandDetail">Choose a sample clip, your camera or your own video</span>
+      </div>
+
+      <div class="stage" id="stage">
+        <video id="video" playsinline muted></video>
+        <canvas id="overlay" aria-hidden="true"></canvas>
+        <div class="hud" aria-hidden="true">
+          <div class="gauge"><span class="gv" id="ttc">–</span><span class="gl">time to contact, s</span></div>
+          <div class="gauge"><span class="gv" id="risk">0.00</span><span class="gl">collision risk</span></div>
+          <div class="gauge small"><span class="gv" id="fps">–</span><span class="gl">frames per second on <span id="backend">–</span></span></div>
+          <div class="gauge small"><span class="gv" id="speed">–</span><span class="gl">km/h (GPS)</span></div>
+        </div>
+        <div class="empty" id="empty">
+          <p class="empty-title">See it warn before a real crash</p>
+          <p>Every sample is a real dashcam recording that ends in a collision or a near miss. The warning runs live in this browser, frame by frame, from past frames only.</p>
+          <div class="samples" id="samples"></div>
+        </div>
+        <div class="loading" id="loading" hidden></div>
+      </div>
+
+      <div class="controls">
+        <div class="ctl-group">
+          <button class="btn primary" id="btnCamera">Use my camera</button>
+          <label class="btn" for="file">Open a video</label>
+          <input id="file" type="file" accept="video/*" hidden />
+          <button class="btn" id="btnSamples">Sample clips</button>
+          <button class="btn" id="btnStop" hidden>Stop</button>
+        </div>
+        <div class="ctl-group">
+          <label class="toggle"><input type="checkbox" id="sound" checked /> Sound</label>
+          <label class="toggle"><input type="checkbox" id="showBoxes" checked /> Show what it sees</label>
+          <button class="btn quiet" id="btnCalib" title="Drag the yellow point to where the road meets the horizon">Adjust lane</button>
+        </div>
+      </div>
+
+      <div class="drive-below">
+        <div class="panel">
+          <h2>Risk over the last 20 seconds</h2>
+          <canvas id="spark" height="90" aria-label="Collision risk over time"></canvas>
+        </div>
+        <div class="panel">
+          <h2>Trip report</h2>
+          <p class="muted">Risk model: <span id="modelInfo">loads with the first clip</span></p>
+          <p class="muted" id="tripSummary">Warnings and near misses of this session appear here. Nothing leaves this phone.</p>
+          <ol class="events" id="events"></ol>
+          <button class="btn quiet" id="btnExport" hidden>Save trip report</button>
+        </div>
+      </div>
+
+      <details class="setup">
+        <summary>Mounting the phone in a car</summary>
+        <ol>
+          <li>Mount the phone on the windscreen behind the mirror, camera facing forward, landscape if possible.</li>
+          <li>Open this page, tap <b>Use my camera</b> and allow camera and location.</li>
+          <li>Tap <b>Adjust lane</b> and drag the yellow point to where your lane meets the horizon. It is remembered.</li>
+          <li>Keep the screen on and the sound up. Warnings are silenced below 8 km/h, so traffic queues stay quiet.</li>
+        </ol>
+      </details>
+    </section>
+
+    <!-- ============ RESULTS ============ -->
+    <section id="page-results" class="page doc" data-page="results" hidden>
+      <div id="resultsRoot"><p class="muted">Loading test results…</p></div>
+    </section>
+
+    <!-- ============ HOW ============ -->
+    <section id="page-how" class="page doc" data-page="how" hidden>
+      <div id="howRoot"></div>
+    </section>
+
+    <!-- ============ BUSINESS ============ -->
+    <section id="page-business" class="page doc" data-page="business" hidden>
+      <div id="businessRoot"></div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="page-about" class="page doc" data-page="about" hidden>
+      <div id="aboutRoot"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Trumen Guard is a partner product for Toyota and BYD Royal Motors after-sales, built by team Trumen for the WIUT Hackathon 2026 final.</p>
+    <p>A driver aid, not a substitute for attention. Sample clips: Nexar Collision Prediction Dataset © 2025 Nexar Inc., used under its open data licence.</p>
+  </footer>
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>
