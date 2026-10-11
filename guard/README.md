@@ -125,7 +125,7 @@ No personal data is collected: camera frames are processed in memory on the devi
 ## Add-on: Trumen Scan (3D parts from a phone walk-around)
 
 `scan/` turns a walk-around video or photos of a car into a 3D model of that car's exterior, split into 32 named parts
-with sizes and search links, exported as glTF and JSON for other apps. Live at `/scan/` on the site; details,
+with sizes and search links, exported as glTF and JSON for other apps. After tuning, the scan's wheelbase is within 2 mm, body width +16 mm and height +4 mm of the published figures (length sets the scale), with panels 10 mm thick. Live at `/scan/` on the site; details,
 models and licences in [scan/README.md](scan/README.md). Built during the final (10 October 2026) as a next product
 for Royal Motors after-sales (handover condition record, trade-in, parts lookup).
 

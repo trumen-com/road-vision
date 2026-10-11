@@ -40,10 +40,11 @@ keep=pid>=0
 X,C,P=X[keep],C[keep],pid[keep]
 print(len(parts),'parts',keep.sum(),'points')
 for p in parts: print(p['id'],p['name'],p['points'],p['size_m'])
+T=json.load(open('tune_final.json'))
+checks=[{'name':'Wheelbase','scan_m':T['wheelbase'],'published_m':2.825},{'name':'Body width (no mirrors)','scan_m':T['width'],'published_m':1.84},{'name':'Height','scan_m':T['height'],'published_m':1.445}]
 meta={'vehicle':CAR,'identified_by':'badge and wrap text visible in the photos (set by hand in this demo)','units':'metres',
       'scale_from':'published overall length 4,915 mm','source':'95 views: 29 s walk-around video (3 fps) + 9 photos',
-      'measured_extent_m':[round(float(np.percentile(X[:,i],99.5)-np.percentile(X[:,i],0.5)),2) for i in range(3)],
-      'published_extent_m':[4.915,1.84,1.445],'parts':parts}
+      'checks':checks,'surface_thickness_mm':T['thickness_mm'],'parts':parts}
 os.makedirs('out',exist_ok=True); json.dump(meta,open('out/parts.json','w'),indent=1)
 # glTF: one named point-cloud node per part
 scene=trimesh.Scene()

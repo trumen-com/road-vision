@@ -8,10 +8,12 @@ python3 - <<'PY'
 from huggingface_hub import hf_hub_download
 hf_hub_download('mitbersh/car-parts-segmentation', 'parts_segmentation.pt', local_dir='seg')
 PY
-python3 sfm.py          # camera poses + sparse points (COLMAP via pycolmap), ~11 min on 2 CPU cores for 95 views
+python3 sfm2.py         # camera poses + sparse points (COLMAP via pycolmap); video frames share one camera; ~20 min on 2 CPU cores
+                        # (expects imgs2/video/*.jpg and imgs2/photos/*.jpg; per-view masks and depth below read imgs/)
 python3 seg_all.py      # per-view part masks (33 classes, side-aware)
 python3 depth_all.py    # per-view monocular depth (Depth Anything V2 Small)
-python3 fuse.py         # align depth to the SfM points of each view, back-project car pixels (plate removed)
-python3 vox.py          # multi-view fusion (>=3 views per 2 cm voxel), majority part label, car axes, metric scale
+# tuned fusion: per-view depth aligned with a tilt term, neighbour-view depth check, voxel fusion, ground plane and
+# symmetry axes, metric scale from the published length; prints the accuracy checks and writes car_parts.npz
+SFM=sfm2 python3 tune.py '{"mv_min":2,"mv_tau":0.015,"erode":10,"align":"inv_plane","fill":1,"fill_views":3}' --save | tail -1 > tune_final.json
 python3 parts.py        # part instances (left/right), sizes, search links, glb + parts.json + viewer payload
 python3 -c "t=open('template.html').read();d=open('viewer_data.json').read();open('index.html','w').write(t.replace('__DATA__',d))"

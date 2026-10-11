@@ -253,13 +253,14 @@ s.addNotes("One and a half minutes. Cost to build and run the pilot, unit econom
 pres.addSection({ title: "Next product" });
 s = pres.addSlide({ masterName: "DARK", sectionTitle: "Next product" });
 text(s, "Next product: one walk-around, the car in 3D, part by part", { x: 0.6, y: 0.45, w: 12.1, h: 0.8, fontSize: 30, bold: true, fontFace: "Arial", color: "FFFFFF" });
+const SC = JSON.parse(fs.readFileSync(path.join(ROOT, "scan/tune_final.json"), "utf8"));
 const img = (f) => "image/png;base64," + fs.readFileSync(path.join(__dirname, f)).toString("base64");
 s.addImage({ data: img("scan_whole.png"), x: 0.6, y: 1.45, w: 5.9, h: 3.69, objectName: "scan whole" });
 s.addImage({ data: img("scan_apart.png"), x: 6.8, y: 1.45, w: 5.9, h: 3.69, objectName: "scan apart" });
 text(s, "The Royal Motors test-drive Camry at the venue: 29 s video + 9 photos", { x: 0.6, y: 5.2, w: 5.9, h: 0.35, fontSize: 13, color: HEX.accent6 });
 text(s, "Split into 32 named exterior parts, each sized and searchable", { x: 6.8, y: 5.2, w: 5.9, h: 0.35, fontSize: 13, color: HEX.accent6 });
 text(s, [
-  { text: "95 of 95 views placed; scale from the published length, then width 1.93 m and height 1.36 m vs 1.84 / 1.445 m published. Exported as glTF + JSON for other apps.", options: { breakLine: true } },
+  { text: `95 of 95 views placed. Scale from the published length; then wheelbase ${SC.err_wheelbase_mm >= 0 ? "+" : ""}${SC.err_wheelbase_mm} mm, width ${SC.err_width_mm >= 0 ? "+" : ""}${SC.err_width_mm} mm, height ${SC.err_height_mm >= 0 ? "+" : ""}${SC.err_height_mm} mm vs published. Exported as glTF + JSON.`, options: { breakLine: true } },
   { text: "For after-sales: a 3D condition record at handover and trade-in, and parts lookup. Hidden parts would come from the Toyota/BYD catalogue by VIN.", options: {} },
 ], { x: 0.6, y: 5.65, w: 12.1, h: 1.1, fontSize: 15, color: "FFFFFF", paraSpaceAfter: 4 });
 s.addNotes("Fifteen seconds, only if time allows. Built during the final as an add-on, live at /scan/ on the same site. Exterior only; plate and people are removed from the model.");

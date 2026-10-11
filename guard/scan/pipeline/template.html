@@ -80,12 +80,12 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
   <ul>
    <li>Camera positions for all 95 views (video frames at 3 fps plus 9 photos) by Structure from Motion.</li>
    <li>Every frame split into car parts by a segmentation model, then given depth by a monocular depth network, aligned to the 3D points of that view.</li>
-   <li>Kept only points seen in at least 3 views; each point takes the part most views agree on. Left and right come from the car's own axes.</li>
+   <li>Each view's depth is checked against its neighbours; a point is kept only if two other views agree within 1.5%, it is seen in 3 views or more, and most views agree on its part.</li><li>The car's axes come from the ground plane and the car's left-right symmetry.</li>
   </ul>
  </section>
  <section><h2>Size check</h2>
-  <table id="dims"><tr><th></th><th>Scan</th><th>Published</th></tr></table>
-  <p class="muted" style="margin-top:6px">Length is used to set the scale, so only width and height are a real test. Width includes the mirrors in the scan.</p>
+  <table id="dims"><tr><th></th><th>Scan</th><th>Published</th><th>Error</th></tr></table>
+  <p class="muted" style="margin-top:6px">Only the length (4.915 m) sets the scale; these three are checks. They were also used while tuning on this one car, so expect larger errors on a new car.</p>
  </section>
  <section><h2>Use it in other apps</h2>
   <p>The scan exports as <code>camry_parts.glb</code> (one named node per part) and <code>parts.json</code> (names, sides, sizes, centres, search queries). Any 3D viewer, AR app, parts shop or insurance tool can read them.</p>
@@ -127,7 +127,8 @@ function renderDetail(){
  <div class="links"><a href="${p.search.google}" target="_blank" rel="noopener">Google</a><a href="${p.search.ebay}" target="_blank" rel="noopener">eBay</a><a href="${p.search.olx_uz}" target="_blank" rel="noopener">OLX.uz</a><a href="${p.search.amazon}" target="_blank" rel="noopener">Amazon</a></div>
  <div class="q">${p.query}</div>`}
 renderDetail();
-const dims=document.getElementById("dims");["Length","Width","Height"].forEach((n,i)=>{dims.insertAdjacentHTML("beforeend",`<tr><td>${n}</td><td>${M.measured_extent_m[i].toFixed(2)} m</td><td>${M.published_extent_m[i].toFixed(2)} m</td></tr>`)});
+const dims=document.getElementById("dims");M.checks.forEach(c=>{const e=Math.round((c.scan_m-c.published_m)*1000);dims.insertAdjacentHTML("beforeend",`<tr><td>${c.name}</td><td>${c.scan_m.toFixed(3)} m</td><td>${c.published_m.toFixed(3)} m</td><td>${e>0?"+":""}${e} mm</td></tr>`)});
+dims.insertAdjacentHTML("afterend",`<p class="muted" style="margin-top:6px">Panels are ${M.surface_thickness_mm.toFixed(0)} mm thick on average (noise across a flat surface; was 15 mm before tuning).</p>`);
 document.getElementById("copyJson").addEventListener("click",async e=>{const t=JSON.stringify(M,null,1);try{await navigator.clipboard.writeText(t);e.target.textContent="Copied"}catch{e.target.textContent="Copy failed"};setTimeout(()=>e.target.textContent="Copy parts.json",1600)});
 // ---------- WebGL
 const cv=document.getElementById("cv"), st=document.getElementById("stage");
