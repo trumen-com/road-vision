@@ -38,6 +38,7 @@ button { cursor: pointer; }
 :focus-visible { outline: 3px solid var(--primer); outline-offset: 2px; }
 
 header.top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px; padding-block: 8px 14px; border-bottom: 2px solid var(--ink); }
+.brand small a.family { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .brand small { display: block; font-family: var(--font-data); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 .tabs { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 3px; }
 .tab { border: 0; background: none; padding: 7px 14px; border-radius: 6px; font-weight: 600; }
@@ -152,7 +153,7 @@ body[data-mode="collect"] .inspect-only { display: none; }
 <div class="wrap">
   <header class="top">
     <div class="brand">
-      <small>Trade-in screening · Trumen</small>
+      <small>Trade-in step · <a class="family" href="https://trumen-com.github.io/road-vision/">Trumen for Royal Motors after-sales</a></small>
       <h1>Paint Check</h1>
     </div>
     <div class="tabs" role="tablist">
@@ -169,7 +170,7 @@ body[data-mode="collect"] .inspect-only { display: none; }
       <div class="legend">
         <span><i style="background: color-mix(in srgb, var(--ok) 32%, var(--panel-none))"></i>Original</span>
         <span><i style="background: color-mix(in srgb, var(--check) 45%, var(--panel-none))"></i>Small difference</span>
-        <span><i style="background: color-mix(in srgb, var(--suspect) 50%, var(--panel-none))"></i>Differs at a joint</span>
+        <span><i style="background: color-mix(in srgb, var(--suspect) 50%, var(--panel-none))"></i>Differs, check with a gauge</span>
         <span><i style="background: var(--bad)"></i>Likely repainted</span>
       </div>
     </div>
@@ -178,7 +179,7 @@ body[data-mode="collect"] .inspect-only { display: none; }
       <div class="verdict" id="verdict"><b>–</b><span>–</span></div>
       <dl class="facts">
         <dt>Likely repainted</dt><dd id="rBad">none</dd>
-        <dt>Differs at a joint</dt><dd id="rSus">none</dd>
+        <dt>Check with a gauge</dt><dd id="rSus">none</dd>
         <dt>Small difference</dt><dd id="rChk">none</dd>
       </dl>
       <div class="actions">
@@ -213,9 +214,9 @@ body[data-mode="collect"] .inspect-only { display: none; }
     <h2 style="margin-bottom:10px">How it works</h2>
     <div class="howto">
       <div><h3>One photo per joint</h3>Both panels in one shot share the same light, so their colours can be compared fairly. Across two photos they could not be.</div>
-      <div><h3>Paint at equal brightness</h3>Two panels face the light at different angles. We take the reflection-free part of each side and compare colour at the same brightness (CIEDE2000 colour difference).</div>
-      <div><h3>Texture and gloss</h3>Repaints are often rougher (orange peel, sanding marks) and reflect less sharply than the factory clear coat. Both are measured next to the colour.</div>
-      <div><h3>The odd one out</h3>A panel is called repainted when it differs from every neighbour it was compared with. Plastic bumpers may differ a little from the metal at the factory, so their joints need a bigger difference.</div>
+      <div><h3>Paint at equal brightness</h3>We compare narrow strips right next to the gap, at three heights, and use the reflection-free part of each strip. Colour is compared at equal brightness (CIEDE2000), with more tolerance when one panel catches more light.</div>
+      <div><h3>Same direction, every joint</h3>A repainted door is off the same way against the fender and the rear door, for example a little bluer. Lighting differences point in random directions. A panel is called repainted only when its colour is off in one consistent direction at two or more joints.</div>
+      <div><h3>Tested on real photos</h3>Tuned on 845 real joints from public car photos and checked on 921 others. Original paint was flagged at 26% of joints and 21% of panels; simulated repaints of 2 ΔE were caught on 80% of panels. Hood, trunk and bumper joints get more tolerance, because those panels face the light differently.</div>
     </div>
     <p class="scale muted">Score: below <span id="sCheck"></span> same paint · up to <span id="sFlag"></span> small difference · above that, different paint. Screening only: confirm flagged panels with a paint thickness gauge before pricing.</p>
   </section>
@@ -244,8 +245,8 @@ body[data-mode="collect"] .inspect-only { display: none; }
       <div class="swatches"><div class="sw" id="swA">Blue box</div><div class="sw" id="swB">Amber box</div></div>
       <div class="metrics">
         <div><small>Colour difference ΔE</small><b id="mColour"></b></div>
-        <div><small>Texture difference</small><b id="mTexture"></b></div>
-        <div><small>Gloss difference</small><b id="mGloss"></b></div>
+        <div><small>Texture difference (not scored)</small><b id="mTexture"></b></div>
+        <div><small>Gloss difference (not scored)</small><b id="mGloss"></b></div>
         <div><small>Brightness difference (not scored)</small><b id="mLight"></b></div>
       </div>
       <ul id="rvWarn" hidden></ul>

@@ -36,10 +36,14 @@ export const JOINTS = [
   { id: "j14", a: "rf_fender",  b: "f_bumper",   where: "Front right corner, fender to bumper" },
 ];
 
-// Plastic bumpers are painted separately at the factory and often sit a shade off the metal body,
-// so a bumper joint needs a bigger difference before we call it.
-export const PLASTIC_FACTOR = 1.6;
-export const jointFactor = (j) => (PANELS[j.a].plastic || PANELS[j.b].plastic ? PLASTIC_FACTOR : 1);
+// Some joints differ more with the same paint, so they need a bigger difference before we call them.
+// Fitted on real photos so that original paint is flagged about as often at every kind of joint (eval/README):
+//  - bumpers are plastic, painted separately at the factory, and sit at an angle to the body: 1.4
+//  - hood and trunk edges: the hood faces the sky, the fender faces sideways, so they reflect different light: 1.8
+export const BUMPER_FACTOR = 1.4, LID_FACTOR = 1.8;
+const LIDS = new Set(["hood", "trunk"]);
+export const jointFactor = (j) =>
+  LIDS.has(j.a) || LIDS.has(j.b) ? LID_FACTOR : PANELS[j.a].plastic || PANELS[j.b].plastic ? BUMPER_FACTOR : 1;
 
 // Top-down diagram, front at the top. viewBox 0 0 220 440.
 export const SHAPES = {

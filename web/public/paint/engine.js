@@ -5,17 +5,20 @@
 export const DEFAULTS = {
   maxSide: 720,          // analysis resolution (long side, px)
   searchBand: 0.22,      // look for the gap within ±22% of the guide line (photos from the phone camera are rarely centred)
-  margin: 0.035,         // keep this far from the gap (fraction of width) to skip the gap shadow and edge curvature
-  sampleWidth: 0.2,      // width of each sample box (fraction)
+  margin: 0.025,         // keep this far from the gap (fraction of width) to skip the gap shadow
+  sampleWidth: 0.1,      // width of each sample box (fraction): narrow and close to the gap, where both panels see similar light
   sampleSpan: [0.18, 0.82], // along the gap
   diffuse: [0.15, 0.6],  // luminance quantiles taken as diffuse paint (below: shadow and dirt; above: reflections)
-  // joint verdict thresholds on the combined score (tuned on collected data; see eval/)
+  // joint verdict thresholds, tuned on 845 real joints (eval/README): flagAt catches 90% of simulated 3 ΔE repaints
   checkAt: 1.0,
   flagAt: 1.6,
+  // a panel is called repainted when its paint is off in the same colour direction at every measured joint by at least this much
+  panelAt: 0.45,
   // feature weights in the combined score
-  wTexture: 1.2,
-  wGloss: 0.8,
-  wLight: 0,             // brightness difference: off by default (mostly panel angle); weight set from collected data
+  wTexture: 0,           // texture and gloss added noise, not signal, on real photos: off until close-up data shows otherwise
+  wGloss: 0,
+  strips: 3,             // facing strip pairs along the gap
+  angleK: 30,            // colour tolerance grows with the brightness difference: dE / (1 + dL / angleK)
 };
 
 // ---------------------------------------------------------------- colour
@@ -237,19 +240,39 @@ export function analyzeJoint(imgIn, { orientation = "vertical", guide = 0.5, gap
   const lb = [Math.max(1, gap.x - m - sw), Math.max(2, gap.x - m)];
   const rb = [Math.min(W - 2, gap.x + m), Math.min(W - 1, gap.x + m + sw)];
   const maps = { detail, grad };
+  // whole boxes: for the swatches and the photo checks
   const A = sampleRegion(img, lb[0], lb[1], y0, y1, L, maps, opt);
   const B = sampleRegion(img, rb[0], rb[1], y0, y1, L, maps, opt);
-  // colour difference at equal brightness (shading removed), plus the brightness difference as a separate feature
   const Ym = (Yof(A.rgb) + Yof(B.rgb)) / 2;
   A.lab = labAtY(A.rgb, Ym); B.lab = labAtY(B.rgb, Ym);
-  const dE = deltaE2000(A.lab, B.lab);
-  const dL = Math.abs(A.rawLab[0] - B.rawLab[0]);
+  // the comparison itself: facing strips at several heights along the gap, so each pair sees nearly the same light;
+  // the median over strips ignores one dirty spot or one reflection
   const ratio = (p, q) => (p > 0 && q > 0 ? Math.abs(Math.log(p / q)) : 0);
-  const dTexture = ratio(A.texture, B.texture);
+  const per = [];
+  const ns = Math.max(1, opt.strips | 0);
+  for (let k = 0; k < ns; k++) {
+    const sy0 = Math.round(y0 + ((y1 - y0) * k) / ns), sy1 = Math.round(y0 + ((y1 - y0) * (k + 1)) / ns);
+    const a = ns === 1 ? A : sampleRegion(img, lb[0], lb[1], sy0, sy1, L, maps, opt);
+    const b = ns === 1 ? B : sampleRegion(img, rb[0], rb[1], sy0, sy1, L, maps, opt);
+    if (a.n < 30 || b.n < 30) continue;
+    const ym = (Yof(a.rgb) + Yof(b.rgb)) / 2;
+    const la = labAtY(a.rgb, ym), lb2 = labAtY(b.rgb, ym);
+    per.push({ dE: deltaE2000(la, lb2), dL: Math.abs(a.rawLab[0] - b.rawLab[0]), dT: ratio(a.texture, b.texture), da: lb2[1] - la[1], db: lb2[2] - la[2] });
+  }
+  const med = (k) => (per.length ? median(per.map((p) => p[k])) : NaN);
+  const dE = per.length ? med("dE") : deltaE2000(A.lab, B.lab);
+  const dL = per.length ? med("dL") : Math.abs(A.rawLab[0] - B.rawLab[0]);
+  const dTexture = per.length ? med("dT") : ratio(A.texture, B.texture);
+  // which way the right-hand paint differs from the left-hand paint (a*, b* at equal brightness): a repainted panel is off
+  // in the same direction at all of its joints, lighting noise is not
+  const dab = per.length ? [med("da"), med("db")] : [B.lab[1] - A.lab[1], B.lab[2] - A.lab[2]];
   // reflection sharpness is only comparable when both sides actually show a reflection
   const glossOk = A.hasReflection && B.hasReflection;
   const dGloss = glossOk ? ratio(A.gloss, B.gloss) : 0;
-  const score = dE + opt.wTexture * dTexture + opt.wGloss * dGloss + opt.wLight * dL;
+  // panels that catch the light differently (different angle to the sky) differ in colour too, even with the same paint:
+  // allow more colour difference the bigger the brightness difference
+  const dEadj = dE / (1 + dL / opt.angleK);
+  const score = dEadj + opt.wTexture * dTexture + opt.wGloss * dGloss;
 
   // photo quality checks: the result is only as good as the shot
   const warnings = [];
@@ -271,6 +294,9 @@ export function analyzeJoint(imgIn, { orientation = "vertical", guide = 0.5, gap
     verdict,
     score: +score.toFixed(3),
     dE: +dE.toFixed(3),
+    dEadj: +dEadj.toFixed(3),
+    dab: dab.map((v) => +v.toFixed(3)),
+    strips: per.length,
     dTexture: +dTexture.toFixed(3),
     dGloss: +dGloss.toFixed(3),
     dL: +dL.toFixed(2),
@@ -284,30 +310,35 @@ export function analyzeJoint(imgIn, { orientation = "vertical", guide = 0.5, gap
 }
 
 // ---------------------------------------------------------------- whole car
-// joints: [{a: panelId, b: panelId, result}] → per-panel status.
-// A panel is called repainted when it differs from every neighbour we measured it against
-// while at least one of those neighbours matches somebody else ("the odd one out").
+// joints: [{a: panelId, b: panelId, factor, result}] -> per-panel status.
+// A repainted panel is off in the SAME colour direction against every neighbour it was measured against; differences
+// from lighting point in random directions. So for each panel we turn every joint's colour difference into
+// "this panel minus its neighbour", average the directions, and take the smallest projection onto that average.
+// On real photos this cut false calls compared with "every joint differs" (eval/panel_rules.py).
 export function judgePanels(joints, opt = DEFAULTS) {
   const byPanel = new Map();
   const add = (p, j) => { if (!byPanel.has(p)) byPanel.set(p, []); byPanel.get(p).push(j); };
   for (const j of joints) if (j.result && j.result.reliable) { add(j.a, j); add(j.b, j); }
-  // j.factor > 1 for joints that naturally differ a little (plastic bumper against metal)
   const eff = (j) => j.result.score / (j.factor || 1);
-  const differs = (j) => eff(j) >= opt.flagAt;
-  const checks = (j) => eff(j) >= opt.checkAt;
   const out = {};
   for (const [p, js] of byPanel) {
-    const allDiffer = js.every(differs), anyDiffer = js.some(differs), anyCheck = js.some(checks);
-    // neighbours that agree with someone else are anchors of "original paint"
-    const anchored = js.some((j) => {
-      const other = j.a === p ? j.b : j.a;
-      return (byPanel.get(other) || []).some((k) => k !== j && !checks(k));
+    const vecs = js.map((j) => {
+      const s = (j.b === p ? 1 : -1) / (1 + j.result.dL / opt.angleK) / (j.factor || 1);
+      return [j.result.dab[0] * s, j.result.dab[1] * s];
     });
+    let consistency = 0;
+    if (vecs.length >= 2) {
+      const m = [vecs.reduce((t, v) => t + v[0], 0) / vecs.length, vecs.reduce((t, v) => t + v[1], 0) / vecs.length];
+      const n = Math.hypot(m[0], m[1]);
+      if (n > 0) consistency = Math.min(...vecs.map((v) => (v[0] * m[0] + v[1] * m[1]) / n));
+    }
+    const worst = Math.max(...js.map(eff));
     let status = "original";
-    if (allDiffer && (js.length >= 2 || anchored)) status = "repainted";
-    else if (anyDiffer) status = "suspect";
-    else if (anyCheck) status = "check";
-    out[p] = { status, joints: js.length, worst: +Math.max(...js.map(eff)).toFixed(2) };
+    const least = Math.min(...js.map(eff));
+    if (js.length >= 2 && consistency >= opt.panelAt && least >= opt.checkAt) status = "repainted";
+    else if (worst >= opt.flagAt) status = "suspect";
+    else if (worst >= opt.checkAt) status = "check";
+    out[p] = { status, joints: js.length, worst: +worst.toFixed(2), consistency: +consistency.toFixed(2) };
   }
   return out;
 }

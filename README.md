@@ -6,6 +6,7 @@
 licences and the built-during-the-final declaration: **[guard/README.md](guard/README.md)**.
 Live: **https://trumen-com.github.io/road-vision/** (deployed from this repository by `.github/workflows/pages.yml`).
 Defence deck: `guard/deck/Trumen_Guard_defence.pdf`. Backup demo recording: `guard/demo/backup.mp4`. Add-on built during the final: **Trumen Scan**, a car rebuilt in 3D from a phone walk-around and split into parts (https://trumen-com.github.io/road-vision/scan/, `guard/scan/`).
+Trade-in step: **Paint Check**, which marks panels whose paint is off against their neighbours for a gauge check before a trade-in is priced (https://trumen-com.github.io/road-vision/paint/, `paint/`; how it fits the product: [paint/INTEGRATION.md](paint/INTEGRATION.md)).
 
 The elimination-round work below is unchanged; its website moved to https://trumen-com.github.io/road-vision/elimination/.
 

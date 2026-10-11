@@ -278,7 +278,7 @@ function drawReview() {
   const j = JOINTS.find((x) => x.id === current);
   $("#rvVerdict").className = "rv-verdict " + v;
   $("#rvVerdict b").textContent = VERDICT_TEXT[v];
-  $("#rvVerdict span").textContent = `score ${(r.score / jointFactor(j)).toFixed(2)} · same paint below ${DEFAULTS.checkAt}, different above ${DEFAULTS.flagAt}` + (jointFactor(j) > 1 ? " (bumper joint: plastic and metal are allowed to differ a little)" : "");
+  $("#rvVerdict span").textContent = `score ${(r.score / jointFactor(j)).toFixed(2)} · same paint below ${DEFAULTS.checkAt}, different above ${DEFAULTS.flagAt}` + (jointFactor(j) > 1.5 ? " (hood or trunk edge: these panels face the light differently, so more difference is allowed)" : jointFactor(j) > 1 ? " (bumper joint: plastic sits at an angle to the body, so more difference is allowed)" : "");
   const [ca, cb] = r.sides.map((x) => `rgb(${labToRgb(x.lab).join(",")})`);
   $("#swA").style.background = ca; $("#swB").style.background = cb;
   $("#mColour").textContent = r.dE.toFixed(2);

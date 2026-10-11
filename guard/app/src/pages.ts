@@ -197,10 +197,22 @@ function renderBusiness() {
     <div class="card"><h3>Fleet customers</h3><p>Taxi and corporate fleets buying Toyota and BYD in bulk pay per vehicle per month for the fleet dashboard: warnings and near misses per driver, for coaching.</p></div>
   </div>
 
+  <h2>One phone at every after-sales step</h2>
+  <p>The same idea runs through the whole after-sales cycle: the customer's or the advisor's phone does the seeing, the analysis runs
+  on the phone, nothing is uploaded, and every number is measured on real data before it is shown.</p>
+  <div class="cards">
+    <div class="card"><h3>Car comes in: trade-in</h3><p><a href="paint/">Paint Check</a>. The trade-in advisor photographs the 14 gaps between body panels. Panels whose paint is off the same way against every neighbour are marked for a gauge check before the price is set. Screening, not a verdict.</p></div>
+    <div class="card"><h3>Car goes out: handover</h3><p>Trumen Guard. The customer leaves with a collision warning on their phone, set up in 30 seconds.</p></div>
+    <div class="card"><h3>Service and claims</h3><p><a href="scan/">Trumen Scan</a>. A walk-around becomes a 3D model of that car, split into parts, for estimates and parts search.</p></div>
+  </div>
+  <p>Paint Check on real photos (held-out half: 425 public car photos, 921 joints): original paint is flagged at 26% of joints and 13% of panels are wrongly
+  called repainted; simulated 2 ΔE whole-panel repaints are flagged for a gauge check 90% of the time. Real repaints are not yet measured: that is
+  part of the pilot below.</p>
+
   <h2>Pilot in three months</h2>
   <ol>
     <li>Month 1: install in Royal Motors' own loaner and test-drive cars (20 cars); record local footage with consent; adjust thresholds on Tashkent streets, day and night.</li>
-    <li>Month 2: offer the Safety Pack at handover in one Toyota and one BYD centre; one fleet customer with 50 vehicles.</li>
+    <li>Month 2: offer the Safety Pack at handover in one Toyota and one BYD centre; one fleet customer with 50 vehicles. At the same centres' trade-in desks, run Paint Check on every trade-in next to a paint thickness gauge, to measure it on real repaints.</li>
     <li>Month 3: measure attach rate, warnings per 100 km, driver feedback and any avoided incidents; decide on roll-out.</li>
   </ol>
   <p>No vehicle modification and no type approval is needed: it is an app on the driver's phone, like a navigation app, and it only warns. Video stays on the phone, so no personal data is collected without consent.</p>
